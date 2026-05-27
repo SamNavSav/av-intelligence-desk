@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Action Ventures · Intelligence Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07070b;
+  --surface: rgba(255,255,255,.04);
+  --surface2: rgba(255,255,255,.06);
+  --border: rgba(255,255,255,.09);
+  --border2: rgba(255,255,255,.16);
+  --text: #f0efe8;
+  --soft: #c9c8c0;
+  --muted: #8a897f;
+  --gold: #d4b46d;
+  --gold-dim: rgba(212,180,109,.1);
+  --gold-border: rgba(212,180,109,.25);
+  --green: #6ee09c;
+  --green-dim: rgba(110,224,156,.08);
+  --blue: #7cb8ff;
+  --red: #ef6c6c;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+html { height: 100%; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* grain */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  opacity: .022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px;
+}
+
+/* ---- TOP BAR ---- */
+.topbar {
+  height: 60px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(7,7,11,.88);
+  backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: relative;
+  z-index: 50;
+}
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.av-icon {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold), #a8893a);
+  display: grid; place-items: center;
+  font-size: 14px; font-weight: 900; color: #0a0a0a;
+}
+.topbar-brand { font-size: 14px; font-weight: 700; letter-spacing: .01em; }
+.topbar-sub { font-size: 10px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.live-pill {
+  display: flex; align-items: center; gap: 7px;
+  border: 1px solid rgba(110,224,156,.2);
+  background: rgba(110,224,156,.06);
+  border-radius: 999px;
+  padding: 5px 11px;
+  font-size: 10px; font-weight: 700; color: #c8ffd8; letter-spacing: .04em;
+}
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px rgba(110,224,156,.6);
+  animation: livePulse 2s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%, 100% { opacity: .6; box-shadow: 0 0 6px rgba(110,224,156,.4); }
+  50% { opacity: 1; box-shadow: 0 0 14px rgba(110,224,156,.8); }
+}
+
+/* ---- LAYOUT ---- */
+.layout {
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  gap: 16px;
+  height: calc(100vh - 60px);
+  padding: 16px 20px;
+  overflow: hidden;
+}
+
+/* ---- SIDEBAR ---- */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.sidebar-card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  padding: 14px;
+}
+.sidebar-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+/* Mode buttons */
+.mode-btn {
+  width: 100%; text-align: left; cursor: pointer;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 13px;
+  margin-bottom: 6px;
+  background: transparent;
+  color: var(--soft);
+  font-family: var(--sans);
+  transition: .15s ease;
+}
+.mode-btn:last-child { margin-bottom: 0; }
+.mode-btn.active {
+  border-color: var(--gold-border);
+  background: var(--gold-dim);
+  color: var(--text);
+}
+.mode-btn:hover:not(.active) { border-color: var(--border2); background: var(--surface2); }
+.mode-btn strong { display: block; font-size: 13px; margin-bottom: 2px; }
+.mode-btn span { display: block; font-size: 11px; color: var(--muted); line-height: 1.3; }
+
+/* Signals grid */
+.signal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.signal-cell {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 10px;
+  background: rgba(255,255,255,.02);
+}
+.signal-value { font-size: 15px; font-weight: 900; letter-spacing: -.02em; }
+.signal-label { font-size: 10px; color: var(--muted); margin-top: 1px; }
+
+.sidebar-info {
+  font-size: 12px; color: var(--muted); line-height: 1.5;
+}
+.sidebar-info strong { color: var(--soft); }
+
+/* ---- CHAT AREA ---- */
+.chat-area {
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: rgba(8,8,12,.92);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Chat header */
+.chat-head {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+.chat-head-title { font-size: 14px; font-weight: 700; }
+.chat-head-sub { font-size: 11px; color: var(--muted); }
+.chat-head-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.pill {
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 10px; font-weight: 700;
+  border: 1px solid var(--border);
+  color: var(--soft);
+}
+.pill-gold {
+  border-color: var(--gold-border);
+  background: var(--gold-dim);
+  color: var(--gold);
+}
+
+/* Messages stream */
+.chat-stream {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 18px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Empty state */
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 30px 20px;
+}
+.empty-icon {
+  width: 50px; height: 50px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--gold), #a8893a);
+  display: grid; place-items: center;
+  font-size: 20px; font-weight: 900; color: #0a0a0a;
+  margin-bottom: 18px;
+}
+.empty-title {
+  font-family: var(--serif);
+  font-size: 26px; font-weight: 400;
+  margin-bottom: 6px;
+}
+.empty-title em { color: var(--gold); font-style: italic; }
+.empty-sub {
+  font-size: 13px; color: var(--muted); max-width: 420px; line-height: 1.5;
+  margin-bottom: 24px;
+}
+.empty-prompts-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.quick-btn {
+  width: 100%; max-width: 500px;
+  text-align: left; cursor: pointer;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 10px 14px;
+  margin-bottom: 6px;
+  background: rgba(255,255,255,.025);
+  color: var(--soft);
+  font-size: 12.5px; line-height: 1.4;
+  font-family: var(--sans);
+  transition: .15s ease;
+}
+.quick-btn:hover {
+  border-color: var(--gold-border);
+  background: var(--gold-dim);
+}
+
+/* Message bubbles */
+.msg {
+  display: flex;
+  gap: 9px;
+}
+.msg.user { justify-content: flex-end; }
+.msg .avatar {
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 900;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.msg .avatar.agent {
+  background: linear-gradient(135deg, var(--gold), #a8893a);
+  color: #0a0a0a;
+}
+.msg .bubble {
+  max-width: 72%;
+  padding: 11px 15px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.msg.agent .bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--soft);
+}
+.msg.user .bubble {
+  background: rgba(212,180,109,.11);
+  border: 1px solid var(--gold-border);
+  color: var(--text);
+}
+.msg.agent .bubble strong { color: var(--text); }
+
+/* Typing */
+.typing-dots {
+  display: flex; gap: 5px; align-items: center;
+  padding: 4px 0;
+}
+.typing-dots span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); opacity: .4;
+}
+.typing-dots span:nth-child(1) { animation: typePulse 1.2s ease-in-out 0s infinite; }
+.typing-dots span:nth-child(2) { animation: typePulse 1.2s ease-in-out .2s infinite; }
+.typing-dots span:nth-child(3) { animation: typePulse 1.2s ease-in-out .4s infinite; }
+@keyframes typePulse {
+  0%, 100% { opacity: .25; transform: scale(.8); }
+  50% { opacity: .8; transform: scale(1); }
+}
+
+/* Input */
+.chat-input-area {
+  border-top: 1px solid var(--border);
+  padding: 14px 16px;
+  flex-shrink: 0;
+}
+.chat-input-row {
+  display: flex; gap: 8px; align-items: flex-end;
+}
+.chat-input-row textarea {
+  flex: 1; resize: none;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255,255,255,.03);
+  color: var(--text);
+  padding: 10px 14px;
+  font-size: 13.5px; line-height: 1.45;
+  font-family: var(--sans);
+  outline: none;
+  transition: border-color .15s;
+}
+.chat-input-row textarea:focus { border-color: var(--gold-border); }
+.chat-input-row textarea::placeholder { color: var(--muted); }
+.send-btn {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,.06);
+  color: var(--muted);
+  font-size: 17px; font-weight: 900;
+  cursor: default;
+  display: grid; place-items: center;
+  transition: .15s ease;
+  flex-shrink: 0;
+}
+.send-btn.active {
+  background: linear-gradient(135deg, var(--gold), #a8893a);
+  color: #0a0a0a;
+  cursor: pointer;
+}
+.chat-footer {
+  font-size: 10px; color: var(--muted);
+  text-align: center;
+  margin-top: 8px;
+  letter-spacing: .01em;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 3px; }
+
+/* Responsive */
+@media (max-width: 820px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  body { overflow: auto; }
+  .layout { height: auto; min-height: calc(100vh - 60px); }
+  .chat-area { min-height: calc(100vh - 92px); }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="av-icon">AV</div>
+    <div>
+      <div class="topbar-brand">Action Ventures</div>
+      <div class="topbar-sub">Intelligence Desk</div>
+    </div>
+  </div>
+  <div class="live-pill">
+    <div class="live-dot"></div>
+    LIVE AGENT
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="sidebar-card">
+      <div class="sidebar-label">Agent Mode</div>
+      <button class="mode-btn active" id="founderBtn" onclick="switchMode('founder')">
+        <strong>Founder Agent</strong>
+        <span>Assess your startup's investor readiness</span>
+      </button>
+      <button class="mode-btn" id="investorBtn" onclick="switchMode('investor')">
+        <strong>Investor Agent</strong>
+        <span>Get structured deal intelligence</span>
+      </button>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-label">Live Signals</div>
+      <div class="signal-grid" id="signalGrid">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-label">How this works</div>
+      <div class="sidebar-info">
+        This agent uses <strong>AI-powered analysis</strong> shaped by Action Ventures' operator lens and private capital expertise. In production, all outputs are <strong>human-reviewed</strong> before delivery to investors or founders.
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAT AREA -->
+  <div class="chat-area">
+    <div class="chat-head">
+      <div>
+        <div class="chat-head-title" id="chatTitle">Founder Agent</div>
+        <div class="chat-head-sub">Action Ventures Intelligence Desk</div>
+      </div>
+      <div class="chat-head-pills">
+        <span class="pill pill-gold">Powered by AI</span>
+        <span class="pill">Human-reviewed</span>
+      </div>
+    </div>
+
+    <div class="chat-stream" id="chatStream">
+      <!-- messages or empty state -->
+    </div>
+
+    <div class="chat-input-area">
+      <div class="chat-input-row">
+        <textarea id="chatInput" rows="2" placeholder="Describe your startup — what you do, traction, stage, what you're raising..."></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">↑</button>
+      </div>
+      <div class="chat-footer">Action Ventures Intelligence Desk · AI-powered analysis · Human-reviewed before delivery in production</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════
+
+const MODES = {
+  founder: {
+    title: "Founder Agent",
+    placeholder: "Describe your startup — what you do, traction, stage, what you're raising...",
+    emptyTitle: 'Assess your <em>investor readiness</em>',
+    emptySub: "Describe your startup and get a structured assessment — the kind of honest operator-grade analysis that makes you investor-ready.",
+    quickPrompts: [
+      "We're a B2B SaaS in AI-powered hotel revenue management, $30k MRR, raising a €2M seed round",
+      "Travel marketplace connecting local guides with tourists, 50k app downloads, pre-revenue, seeking €500k",
+      "AI-driven due diligence platform for VCs, just launched beta with 3 pilot customers"
+    ],
+    signals: [
+      { label: "Readiness Score", value: "—", color: "var(--gold)" },
+      { label: "Data Room", value: "Not started", color: "var(--muted)" },
+      { label: "Investor Match", value: "Pending", color: "var(--muted)" },
+      { label: "Risk Level", value: "—", color: "var(--muted)" }
+    ],
+    system: `You are the Action Ventures Founder Intelligence Agent — an AI advisory layer operated by Action Ventures Europe, a private capital advisory network founded in 1991.
+
+Your role: Assess a founder's startup for investor readiness and provide a structured, operator-grade analysis.
+
+When a founder describes their startup, respond with a structured assessment using this format:
+
+**Investor Readiness Assessment**
+
+**Company Snapshot:** [1-2 sentence summary]
+
+**Readiness Score:** [X/10] — [one-line justification]
+
+**What Investors Will Like:**
+• [2-3 specific strengths]
+
+**What Investors Will Question:**
+• [2-3 specific objections or gaps]
+
+**Missing Data / Red Flags:**
+• [What's not mentioned that investors will ask about]
+
+**30-Day Action Plan:**
+1. [Most critical action]
+2. [Second priority]
+3. [Third priority]
+
+**Action Ventures Advisory Note:** [1-2 sentences on how AV's network could specifically help]
+
+Be direct, specific, and commercial. Think like an experienced operator reviewing a deal — not a cheerful AI assistant. If information is vague, flag it. If claims seem inflated, say so.`
+  },
+  investor: {
+    title: "Investor Agent",
+    placeholder: "Tell me about your investment focus — sectors, stage, cheque size, what you look for...",
+    emptyTitle: 'Define your <em>investment thesis</em>',
+    emptySub: "Share your investment focus and get a structured brief on what to look for, what to avoid, and what Action Ventures would screen for you.",
+    quickPrompts: [
+      "Family office focused on AI + hospitality, €100k-500k tickets, European early-stage",
+      "Angel investor interested in travel-tech and marketplace businesses, pre-seed to seed",
+      "VC looking at B2B SaaS in proptech and fintech, Series A, €2-5M cheques"
+    ],
+    signals: [
+      { label: "Deal Flow", value: "—", color: "var(--gold)" },
+      { label: "Match Score", value: "Pending", color: "var(--muted)" },
+      { label: "Sector Intel", value: "Ready", color: "var(--green)" },
+      { label: "Network Reach", value: "Active", color: "var(--green)" }
+    ],
+    system: `You are the Action Ventures Investor Intelligence Agent — an AI advisory layer operated by Action Ventures Europe, a private capital advisory network founded in 1991.
+
+Your role: Help investors clarify their thesis and receive structured opportunity briefs.
+
+When an investor describes their focus, respond with:
+
+**Investor Profile Brief**
+
+**Focus Summary:** [1-2 sentence summary of their investment thesis]
+
+**Ideal Opportunity Profile:**
+• Stage: [specific]
+• Sectors: [specific]
+• Geography: [if mentioned]
+• Cheque Size: [if mentioned]
+
+**What Action Ventures Would Screen For:**
+• [3-4 specific criteria]
+
+**Current Market Intelligence:**
+• [2-3 relevant observations about deal flow in their focus areas]
+
+**Questions AV Would Ask Every Founder:**
+• [3-4 specific diligence questions]
+
+**Red Flags We'd Filter Out:**
+• [2-3 specific warning signs]
+
+**Action Ventures Network Note:** [1-2 sentences on how AV adds value for this investor]
+
+Be sharp, knowledgeable, and opinionated. Think like an experienced investment advisor who screens 50 deals a month.`
+  }
+};
+
+// ══════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════
+
+let currentMode = 'founder';
+let messages = [];
+let isLoading = false;
+
+const $ = id => document.getElementById(id);
+
+// ══════════════════════════════════════════════════
+// RENDERING
+// ══════════════════════════════════════════════════
+
+function renderSignals(signals) {
+  $('signalGrid').innerHTML = signals.map(s => `
+    <div class="signal-cell">
+      <div class="signal-value" style="color:${s.color}">${s.value}</div>
+      <div class="signal-label">${s.label}</div>
+    </div>
+  `).join('');
+}
+
+function formatMd(text) {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^• (.+)$/gm, '<div style="padding-left:12px;margin:2px 0">• $1</div>')
+    .replace(/^(\d+)\. (.+)$/gm, '<div style="padding-left:12px;margin:2px 0">$1. $2</div>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+}
+
+function renderEmpty() {
+  const m = MODES[currentMode];
+  $('chatStream').innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">AV</div>
+      <div class="empty-title">${m.emptyTitle}</div>
+      <div class="empty-sub">${m.emptySub}</div>
+      <div class="empty-prompts-label">Try an example</div>
+      ${m.quickPrompts.map(q => `<button class="quick-btn" onclick="sendQuick(this)" data-prompt="${q.replace(/"/g, '&quot;')}">${q}</button>`).join('')}
+    </div>
+  `;
+}
+
+function renderMessages() {
+  const stream = $('chatStream');
+  stream.innerHTML = messages.map(msg => {
+    if (msg.role === 'user') {
+      return `<div class="msg user"><div class="bubble">${escHtml(msg.content)}</div></div>`;
+    } else {
+      return `<div class="msg agent"><div class="avatar agent">AV</div><div class="bubble">${formatMd(msg.content)}</div></div>`;
+    }
+  }).join('');
+
+  if (isLoading) {
+    stream.innerHTML += `<div class="msg agent"><div class="avatar agent">AV</div><div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
+  }
+
+  stream.scrollTop = stream.scrollHeight;
+}
+
+function escHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function updateInput() {
+  const val = $('chatInput').value.trim();
+  const btn = $('sendBtn');
+  if (val && !isLoading) {
+    btn.classList.add('active');
+  } else {
+    btn.classList.remove('active');
+  }
+}
+
+// ══════════════════════════════════════════════════
+// ACTIONS
+// ══════════════════════════════════════════════════
+
+function switchMode(mode) {
+  currentMode = mode;
+  messages = [];
+  isLoading = false;
+
+  $('founderBtn').classList.toggle('active', mode === 'founder');
+  $('investorBtn').classList.toggle('active', mode === 'investor');
+  $('chatTitle').textContent = MODES[mode].title;
+  $('chatInput').placeholder = MODES[mode].placeholder;
+
+  renderSignals(MODES[mode].signals);
+  renderEmpty();
+  updateInput();
+}
+
+function sendQuick(el) {
+  const prompt = el.dataset.prompt;
+  $('chatInput').value = prompt;
+  sendMessage();
+}
+
+async function sendMessage() {
+  const input = $('chatInput');
+  const text = input.value.trim();
+  if (!text || isLoading) return;
+
+  messages.push({ role: 'user', content: text });
+  input.value = '';
+  isLoading = true;
+  updateInput();
+  renderMessages();
+
+  try {
+    const apiMessages = messages.map(m => ({
+      role: m.role === 'assistant' ? 'assistant' : 'user',
+      content: m.content
+    }));
+
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: apiMessages,
+        system: MODES[currentMode].system
+      })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.error || 'API error');
+
+    const assistantText = data.content
+      ? data.content.map(b => b.text || '').join('\n')
+      : 'Unable to generate a response. Please try again.';
+
+    messages.push({ role: 'assistant', content: assistantText });
+    updateSignalsFromResponse(assistantText);
+  } catch (err) {
+    messages.push({ role: 'assistant', content: 'Connection error — the agent couldn\'t reach the intelligence layer. Please try again.' });
+  } finally {
+    isLoading = false;
+    updateInput();
+    renderMessages();
+  }
+}
+
+function updateSignalsFromResponse(text) {
+  if (currentMode === 'founder') {
+    const scoreMatch = text.match(/Readiness Score[:\s]*\**(\d+)\/10/i);
+    if (scoreMatch) {
+      const score = parseInt(scoreMatch[1]);
+      const color = score >= 7 ? 'var(--green)' : score >= 5 ? 'var(--gold)' : 'var(--red)';
+      const risk = score >= 7 ? 'Low' : score >= 5 ? 'Medium' : 'High';
+      const riskColor = score >= 7 ? 'var(--green)' : score >= 5 ? 'var(--gold)' : 'var(--red)';
+      renderSignals([
+        { label: "Readiness Score", value: score + "/10", color },
+        { label: "Data Room", value: "Gaps flagged", color: "var(--gold)" },
+        { label: "Investor Match", value: "Processing", color: "var(--blue)" },
+        { label: "Risk Level", value: risk, color: riskColor }
+      ]);
+    }
+  } else {
+    if (text.match(/Focus Summary/i)) {
+      renderSignals([
+        { label: "Deal Flow", value: "Filtering", color: "var(--gold)" },
+        { label: "Match Score", value: "Calibrated", color: "var(--green)" },
+        { label: "Sector Intel", value: "Updated", color: "var(--green)" },
+        { label: "Network Reach", value: "Active", color: "var(--green)" }
+      ]);
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════
+
+$('chatInput').addEventListener('input', updateInput);
+$('chatInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+switchMode('founder');
+</script>
+
+</body>
+</html>
