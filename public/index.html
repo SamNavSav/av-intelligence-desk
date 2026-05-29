@@ -375,11 +375,54 @@ body::after {
 
 /* Responsive */
 @media (max-width: 820px) {
-  .layout { grid-template-columns: 1fr; }
+  .layout { grid-template-columns: 1fr; padding: 8px 8px 20px; gap: 0; }
   .sidebar { display: none; }
   body { overflow: auto; }
   .layout { height: auto; min-height: calc(100vh - 60px); }
-  .chat-area { min-height: calc(100vh - 92px); }
+  .chat-area { min-height: calc(100vh - 76px); border-radius: 18px; }
+  .chat-head { flex-direction: column; gap: 10px; align-items: flex-start; padding: 12px 14px; }
+  .chat-head-pills { display: none; }
+  .mobile-mode-toggle { display: flex !important; }
+  .msg .bubble { max-width: 88%; font-size: 13px; padding: 10px 13px; }
+  .chat-stream { padding: 14px 12px 10px; }
+  .chat-input-area { padding: 10px 12px; }
+  .chat-input-row textarea { font-size: 16px; padding: 10px 12px; min-height: 44px; }
+  .send-btn { width: 44px; height: 44px; }
+  .empty-state { padding: 20px 12px; }
+  .empty-title { font-size: 22px; }
+  .empty-sub { font-size: 12.5px; margin-bottom: 20px; }
+  .quick-btn { font-size: 12px; padding: 10px 12px; }
+  .topbar { padding: 0 12px; height: 54px; }
+  .topbar-brand { font-size: 13px; }
+  .topbar-sub { font-size: 9px; }
+  .live-pill { font-size: 9px; padding: 4px 9px; }
+  .chat-footer { font-size: 9px; }
+}
+
+/* Mobile mode toggle - hidden on desktop */
+.mobile-mode-toggle {
+  display: none;
+  gap: 6px;
+  width: 100%;
+}
+.mobile-mode-btn {
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  transition: .15s ease;
+}
+.mobile-mode-btn.active {
+  border-color: var(--gold-border);
+  background: var(--gold-dim);
+  color: var(--gold);
 }
 </style>
 </head>
@@ -436,13 +479,19 @@ body::after {
   <!-- CHAT AREA -->
   <div class="chat-area">
     <div class="chat-head">
-      <div>
-        <div class="chat-head-title" id="chatTitle">Founder Agent</div>
-        <div class="chat-head-sub">Action Ventures Intelligence Desk</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
+        <div>
+          <div class="chat-head-title" id="chatTitle">Founder Agent</div>
+          <div class="chat-head-sub">Action Ventures Intelligence Desk</div>
+        </div>
+        <div class="chat-head-pills">
+          <span class="pill pill-gold">Powered by AI</span>
+          <span class="pill">Human-reviewed</span>
+        </div>
       </div>
-      <div class="chat-head-pills">
-        <span class="pill pill-gold">Powered by AI</span>
-        <span class="pill">Human-reviewed</span>
+      <div class="mobile-mode-toggle" id="mobileToggle">
+        <button class="mobile-mode-btn active" id="mobileFounderBtn" onclick="switchMode('founder')">Founder Agent</button>
+        <button class="mobile-mode-btn" id="mobileInvestorBtn" onclick="switchMode('investor')">Investor Agent</button>
       </div>
     </div>
 
@@ -651,6 +700,8 @@ function switchMode(mode) {
 
   $('founderBtn').classList.toggle('active', mode === 'founder');
   $('investorBtn').classList.toggle('active', mode === 'investor');
+  $('mobileFounderBtn').classList.toggle('active', mode === 'founder');
+  $('mobileInvestorBtn').classList.toggle('active', mode === 'investor');
   $('chatTitle').textContent = MODES[mode].title;
   $('chatInput').placeholder = MODES[mode].placeholder;
 
