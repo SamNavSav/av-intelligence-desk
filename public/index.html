@@ -380,7 +380,10 @@ async function sendMessage(){
   try{
     const am=msgs.slice(0,-1).map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.content}));am.push(apiMsg);
     const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:am,system:sys})});
-    const data=await res.json();if(!res.ok)throw new Error(data.error||data.detail||'API error '+res.status);
+    const rawText=await res.text();
+    let data;
+    try{data=JSON.parse(rawText)}catch(pe){throw new Error('Function error: '+rawText.substring(0,150))}
+    if(!res.ok)throw new Error(data.error||'API error '+res.status);
     const at=data.content?data.content.map(b=>b.text||'').join('\n'):'Unable to generate.';
     msgs.push({role:'assistant',content:at});
     // Update signals
