@@ -380,7 +380,7 @@ async function sendMessage(){
   try{
     const am=msgs.slice(0,-1).map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.content}));am.push(apiMsg);
     const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:am,system:sys})});
-    const data=await res.json();if(!res.ok)throw new Error(data.error||'err');
+    const data=await res.json();if(!res.ok)throw new Error(data.error||data.detail||'API error '+res.status);
     const at=data.content?data.content.map(b=>b.text||'').join('\n'):'Unable to generate.';
     msgs.push({role:'assistant',content:at});
     // Update signals
@@ -388,7 +388,7 @@ async function sendMessage(){
     if(sm&&mode==='founder'){const s=parseInt(sm[1]);const c=s>=7?'var(--green)':s>=5?'var(--gold)':'var(--red)';renderSigs([{l:"Readiness",v:s+"/10",c},{l:"Data Room",v:"Flagged",c:"var(--gold)"},{l:"Match",v:"Processing",c:"var(--blue)"},{l:"Risk",v:s>=7?"Low":s>=5?"Medium":"High",c}])}
     const im=at.match(/Interest.*?Score[:\s]*\**(\d+)\/10/i);
     if(im&&mode==='investor'){const s=parseInt(im[1]);renderSigs([{l:"Interest",v:s+"/10",c:s>=7?'var(--green)':s>=5?'var(--gold)':'var(--red)'},{l:"Match",v:"Scored",c:"var(--green)"},{l:"Intel",v:"Updated",c:"var(--green)"},{l:"Network",v:"Active",c:"var(--green)"}])}
-  }catch(e){msgs.push({role:'assistant',content:'Connection error. Please try again.'})}
+  }catch(e){msgs.push({role:'assistant',content:'Error: '+e.message+'. Check your API key and Vercel function logs.'})}
   finally{loading=false;updateSend();renderMsgs()}
 }
 
