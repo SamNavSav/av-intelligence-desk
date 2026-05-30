@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // CORS headers
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -13,6 +12,8 @@ export default async function handler(req, res) {
   try {
     const { messages, system } = req.body;
 
+    // Messages can now contain multimodal content (text + images + documents)
+    // Pass them through directly to Claude's API
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -21,8 +22,8 @@ export default async function handler(req, res) {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-6",
-        max_tokens: 1500,
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 4096,
         system: system || "",
         messages: messages || [],
       }),
