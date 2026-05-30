@@ -130,25 +130,27 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font
   .layout{grid-template-columns:1fr;gap:0;padding:6px}
   .sidebar{display:none}
   body{overflow:auto}
-  .layout{height:auto;min-height:calc(100vh - 56px)}
-  .chat-area{min-height:calc(100vh - 68px);border-radius:14px}
+  .layout{height:auto}
+  .chat-area{border-radius:14px;display:flex;flex-direction:column}
+  .chat-body{flex:none;padding:12px 12px 6px}
+  .empty{justify-content:flex-start;padding:24px 16px 16px}
+  .empty-mark{width:40px;height:40px;font-size:15px;margin-bottom:10px}
+  .empty h2{font-size:20px;margin-bottom:4px}
+  .empty p{font-size:12.5px}
   .chat-head{flex-wrap:wrap;padding:10px 12px;gap:8px}
   .head-pills{display:none}
   .msg-bub{max-width:88%;font-size:13px}
   .compose textarea{font-size:16px}
-  .compose{padding:8px 10px}
+  .compose{padding:10px 12px;border-radius:14px}
   .input-wrap{padding:10px 12px}
-  .chat-body{padding:12px 12px 6px}
-  .empty{justify-content:flex-start;padding:30px 16px 10px}
-  .empty-mark{width:40px;height:40px;font-size:15px;margin-bottom:10px}
-  .empty h2{font-size:20px;margin-bottom:4px}
-  .empty p{font-size:12px}
-  .dd{min-width:240px}
+  .dd{min-width:260px}
   .topbar{height:50px;padding:0 12px}
   .topbar-name{font-size:13px}
   .topbar-live{font-size:9px;padding:4px 9px}
-  .act-btn{padding:4px 8px;font-size:10px}
-  .act-btn svg{width:13px;height:13px}
+  .actions{gap:4px;margin-top:10px}
+  .act-btn{padding:8px 14px;font-size:13px;font-weight:700;border:1px solid var(--border);border-radius:10px}
+  .act-btn svg{width:16px;height:16px}
+  .compose-send{width:36px;height:36px;font-size:18px;border-radius:10px}
 }
 @media(max-width:380px){
   .mode-pill{padding:6px 12px;font-size:11px}
