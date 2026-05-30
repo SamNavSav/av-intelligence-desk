@@ -1,3 +1,7 @@
+export const config = {
+  maxDuration: 30,
+};
+
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -12,8 +16,10 @@ export default async function handler(req, res) {
   try {
     const { messages, system } = req.body;
 
-    // Messages can now contain multimodal content (text + images + documents)
-    // Pass them through directly to Claude's API
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
+      return res.status(400).json({ error: "No messages provided" });
+    }
+
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -22,21 +28,26 @@ export default async function handler(req, res) {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
+        model: "claude-sonnet-4-6",
         max_tokens: 4096,
         system: system || "",
-        messages: messages || [],
+        messages: messages,
       }),
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: data.error?.message || "API error" });
+      console.error("Anthropic API error:", response.status, JSON.stringify(data));
+      return res.status(response.status).json({ 
+        error: data.error?.message || "API error " + response.status,
+        detail: data.error?.type || "unknown"
+      });
     }
 
     return res.status(200).json(data);
   } catch (err) {
-    return res.status(500).json({ error: "Internal server error" });
+    console.error("Server error:", err.message);
+    return res.status(500).json({ error: "Server error: " + err.message });
   }
 }
