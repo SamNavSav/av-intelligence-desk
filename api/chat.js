@@ -24,6 +24,12 @@ export default async function handler(req, res) {
         max_tokens: 4096,
         system: system || "",
         messages: messages || [],
+        tools: [
+          {
+            type: "web_search_20250305",
+            name: "web_search"
+          }
+        ],
       }),
     });
 
