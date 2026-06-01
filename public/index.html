@@ -10,218 +10,183 @@
 *{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;overflow:hidden}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
 
-/* Top bar */
+/* ═══ LOGIN SCREEN ═══ */
+.login-screen{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
+.login-screen.hidden{display:none}
+.login-card{width:100%;max-width:400px;text-align:center}
+.login-mark{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--gold),#a8893a);display:grid;place-items:center;font-size:20px;font-weight:900;color:#0a0a0a;margin:0 auto 20px}
+.login-title{font-family:var(--serif);font-size:28px;margin-bottom:4px}
+.login-title em{color:var(--gold);font-style:italic}
+.login-sub{font-size:14px;color:var(--muted);margin-bottom:6px}
+.login-beta{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;border:1px solid var(--gold-border);background:var(--gold-dim);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:28px}
+.login-input{width:100%;padding:14px 18px;border:1px solid var(--border-bright);border-radius:14px;background:rgba(255,255,255,.04);color:var(--text);font-family:var(--sans);font-size:15px;text-align:center;letter-spacing:.08em;outline:none;transition:.15s}
+.login-input:focus{border-color:var(--gold-border);box-shadow:0 0 0 1px var(--gold-border)}
+.login-input::placeholder{color:var(--dim);letter-spacing:.04em}
+.login-btn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--gold),#a8893a);color:#0a0a0a;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;margin-top:10px;transition:.15s}
+.login-btn:hover{opacity:.9}
+.login-error{font-size:13px;color:var(--red);margin-top:10px;min-height:20px}
+.login-divider{height:1px;background:var(--border);margin:28px 0}
+.login-waitlist{font-size:13px;color:var(--muted)}
+.login-waitlist a{color:var(--gold);text-decoration:none;font-weight:600}
+.login-waitlist a:hover{text-decoration:underline}
+
+/* ═══ TOPBAR ═══ */
 .topbar{height:56px;border-bottom:1px solid var(--border);background:rgba(8,8,13,.9);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;z-index:50}
 .topbar-left{display:flex;align-items:center;gap:10px}
 .av-mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--gold),#a8893a);display:grid;place-items:center;font-size:13px;font-weight:900;color:#0a0a0a}
-.topbar-name{font-size:15px;font-weight:700}
-.topbar-label{font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.topbar-name{font-size:15px;font-weight:700}.topbar-label{font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.topbar-right{display:flex;align-items:center;gap:10px}
 .topbar-live{display:flex;align-items:center;gap:6px;border:1px solid rgba(110,224,156,.25);background:rgba(110,224,156,.08);border-radius:999px;padding:5px 12px;font-size:10px;font-weight:700;color:#b8f5cc;letter-spacing:.04em}
 .topbar-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(110,224,156,.6)}
+.topbar-user{font-size:11px;color:var(--dim);padding:4px 10px;border:1px solid var(--border);border-radius:8px}
+.logout-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:4px 10px;font-family:var(--sans);font-size:11px;color:var(--muted);cursor:pointer}
+.logout-btn:hover{border-color:var(--red);color:var(--red)}
 
-/* Layout */
+/* ═══ LAYOUT ═══ */
 .layout{display:grid;grid-template-columns:270px 1fr;gap:14px;height:calc(100vh - 56px);padding:14px 16px;overflow:hidden}
+.layout.no-sidebar{grid-template-columns:1fr}
 
-/* Sidebar */
+/* ═══ SIDEBAR ═══ */
 .sidebar{display:flex;flex-direction:column;gap:10px;overflow-y:auto}
 .sb-card{border:1px solid var(--border);border-radius:16px;background:var(--surface);padding:14px}
 .sb-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
 .sb-mode-btn{width:100%;text-align:left;cursor:pointer;border:1px solid var(--border);border-radius:11px;padding:10px 12px;margin-bottom:6px;background:transparent;color:var(--soft);font-family:var(--sans);transition:.15s}
-.sb-mode-btn:last-child{margin-bottom:0}
-.sb-mode-btn.active{border-color:var(--gold-border);background:var(--gold-dim);color:var(--text)}
+.sb-mode-btn:last-child{margin-bottom:0}.sb-mode-btn.active{border-color:var(--gold-border);background:var(--gold-dim);color:var(--text)}
 .sb-mode-btn:hover:not(.active){border-color:var(--border-bright);background:var(--surface2)}
-.sb-mode-btn strong{display:block;font-size:13px;margin-bottom:1px}
-.sb-mode-btn span{font-size:11px;color:var(--muted)}
+.sb-mode-btn strong{display:block;font-size:13px;margin-bottom:1px}.sb-mode-btn span{font-size:11px;color:var(--muted)}
 .signal-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .signal-cell{border:1px solid var(--border);border-radius:10px;padding:9px 10px;background:rgba(255,255,255,.025)}
-.signal-val{font-size:15px;font-weight:900;letter-spacing:-.02em}
-.signal-lbl{font-size:10px;color:var(--muted);margin-top:1px}
-.sb-skill{font-size:13px;color:var(--soft)}
-.sb-skill strong{color:var(--gold)}
-.sb-info{font-size:11.5px;color:var(--muted);line-height:1.5}
-.sb-info strong{color:var(--soft)}
+.signal-val{font-size:15px;font-weight:900;letter-spacing:-.02em}.signal-lbl{font-size:10px;color:var(--muted);margin-top:1px}
+.sb-skill{font-size:13px;color:var(--soft)}.sb-skill strong{color:var(--gold)}
+.sb-info{font-size:11.5px;color:var(--muted);line-height:1.5}.sb-info strong{color:var(--soft)}
 
-/* Chat area */
+/* ═══ CHAT AREA ═══ */
 .chat-area{border:1px solid var(--border);border-radius:20px;background:rgba(10,10,15,.92);display:flex;flex-direction:column;overflow:hidden;min-height:0}
-
-/* Chat head with integrated mode toggle */
-.chat-head{border-bottom:1px solid var(--border);background:var(--surface);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:10px}
+.chat-head{border-bottom:1px solid var(--border);background:var(--surface);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:10px;flex-wrap:wrap}
 .chat-head-left{display:flex;align-items:center;gap:10px}
-.chat-head-title{font-size:14px;font-weight:700}
-.chat-head-sub{font-size:11px;color:var(--muted)}
+.chat-head-title{font-size:14px;font-weight:700}.chat-head-sub{font-size:11px;color:var(--muted)}
 .mode-pills{display:flex;border:1px solid var(--gold-border);border-radius:10px;overflow:hidden}
 .mode-pill{background:none;border:none;color:var(--muted);font-family:var(--sans);font-size:12px;font-weight:700;padding:7px 16px;cursor:pointer;transition:.15s}
-.mode-pill.active{background:var(--gold);color:#0a0a0a}
-.mode-pill:hover:not(.active){color:var(--soft);background:rgba(255,255,255,.04)}
-.head-pills{display:flex;gap:6px}
-.head-pill{border-radius:999px;padding:4px 10px;font-size:10px;font-weight:700;border:1px solid var(--border);color:var(--muted)}
-.head-pill-gold{border-color:var(--gold-border);background:var(--gold-dim);color:var(--gold)}
+.mode-pill.active{background:var(--gold);color:#0a0a0a}.mode-pill:hover:not(.active){color:var(--soft);background:rgba(255,255,255,.04)}
+.head-btns{display:flex;gap:6px;align-items:center}
+.head-btn{display:flex;align-items:center;gap:4px;background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;font-family:var(--sans);font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s}
+.head-btn:hover{border-color:var(--gold-border);color:var(--gold)}
+.head-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-/* Chat body */
+/* ═══ CHAT BODY ═══ */
 .chat-body{flex:1;overflow-y:auto;padding:16px 16px 8px;display:flex;flex-direction:column}
-
-/* Empty state - compact */
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex:1;padding:20px}
 .empty-mark{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,var(--gold),#a8893a);display:grid;place-items:center;font-size:17px;font-weight:900;color:#0a0a0a;margin-bottom:14px}
-.empty h2{font-family:var(--serif);font-size:24px;font-weight:400;margin-bottom:6px}
-.empty h2 em{color:var(--gold);font-style:italic}
+.empty h2{font-family:var(--serif);font-size:24px;font-weight:400;margin-bottom:6px}.empty h2 em{color:var(--gold);font-style:italic}
 .empty p{font-size:13px;color:var(--muted);max-width:400px;line-height:1.5}
-
-/* Messages */
-.msg{display:flex;gap:9px;margin-bottom:14px}
-.msg.user{justify-content:flex-end}
+.msg{display:flex;gap:9px;margin-bottom:14px}.msg.user{justify-content:flex-end}
 .msg-av{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--gold),#a8893a);display:grid;place-items:center;font-size:10px;font-weight:900;color:#0a0a0a;flex-shrink:0;margin-top:2px}
 .msg-bub{max-width:75%;padding:11px 15px;border-radius:16px;font-size:13.5px;line-height:1.6}
 .msg.agent .msg-bub{background:var(--surface);border:1px solid var(--border);color:var(--soft);border-top-left-radius:4px}
 .msg.user .msg-bub{background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--text);border-top-right-radius:4px}
-.msg.agent .msg-bub strong{color:var(--text)}
-.msg.agent .msg-bub hr{border:none;border-top:1px solid var(--border);margin:8px 0}
-.typing{display:flex;gap:5px;padding:4px 0}
-.typing span{width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.3}
-.typing span:nth-child(1){animation:tp 1.2s ease 0s infinite}
-.typing span:nth-child(2){animation:tp 1.2s ease .2s infinite}
-.typing span:nth-child(3){animation:tp 1.2s ease .4s infinite}
+.msg.agent .msg-bub strong{color:var(--text)}.msg.agent .msg-bub hr{border:none;border-top:1px solid var(--border);margin:8px 0}
+.typing{display:flex;gap:5px;padding:4px 0}.typing span{width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.3}
+.typing span:nth-child(1){animation:tp 1.2s ease 0s infinite}.typing span:nth-child(2){animation:tp 1.2s ease .2s infinite}.typing span:nth-child(3){animation:tp 1.2s ease .4s infinite}
 @keyframes tp{0%,100%{opacity:.2;transform:scale(.85)}50%{opacity:.7;transform:scale(1)}}
 
-/* Input area */
+/* ═══ INPUT ═══ */
 .input-wrap{border-top:1px solid var(--border);padding:12px 16px;flex-shrink:0;background:rgba(10,10,15,.95)}
-
-/* Chips */
 .chip-row{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
 .chip{display:none;align-items:center;gap:5px;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;width:fit-content}
-.chip.show{display:inline-flex}
-.chip-skill{border:1px solid var(--gold-border);background:var(--gold-dim);color:var(--gold)}
+.chip.show{display:inline-flex}.chip-skill{border:1px solid var(--gold-border);background:var(--gold-dim);color:var(--gold)}
 .chip-file{border:1px solid var(--border-bright);background:var(--surface2);color:var(--soft)}
-.chip button{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 2px}
-.chip button:hover{color:var(--red)}
-
-/* Compose */
-.compose{display:flex;gap:8px;align-items:flex-end;border:1px solid var(--border-bright);border-radius:14px;background:rgba(255,255,255,.035);padding:8px 12px;transition:border-color .15s}
+.chip button{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 2px}.chip button:hover{color:var(--red)}
+.compose{display:flex;gap:8px;align-items:flex-end;border:1px solid var(--border-bright);border-radius:14px;background:rgba(255,255,255,.035);padding:8px 12px;transition:.15s}
 .compose:focus-within{border-color:var(--gold-border);box-shadow:0 0 0 1px var(--gold-border)}
 .compose textarea{flex:1;background:none;border:none;color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.45;resize:none;outline:none;min-height:22px;max-height:120px}
 .compose textarea::placeholder{color:var(--dim)}
 .compose-send{width:32px;height:32px;border-radius:8px;border:none;background:var(--surface2);color:var(--dim);font-size:16px;font-weight:900;cursor:default;display:grid;place-items:center;transition:.15s;flex-shrink:0}
 .compose-send.active{background:var(--gold);color:#0a0a0a;cursor:pointer}
-
-/* Action bar */
 .actions{display:flex;align-items:center;gap:2px;margin-top:8px}
 .act-btn{display:flex;align-items:center;gap:5px;background:none;border:1px solid transparent;border-radius:8px;padding:5px 10px;font-family:var(--sans);font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;transition:.15s;position:relative}
 .act-btn:hover{color:var(--gold);border-color:var(--gold-border);background:var(--gold-dim)}
 .act-btn.recording{color:var(--red);border-color:rgba(239,108,108,.3);background:rgba(239,108,108,.08)}
 .act-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-
-/* Dropdown */
 .dd{display:none;position:absolute;bottom:calc(100% + 6px);left:0;min-width:280px;max-height:360px;overflow-y:auto;background:rgba(16,16,22,.98);backdrop-filter:blur(16px);border:1px solid var(--border-bright);border-radius:14px;padding:6px;z-index:100;box-shadow:0 8px 40px rgba(0,0,0,.6)}
-.dd.show{display:block}
-.dd.right{left:auto;right:0}
+.dd.show{display:block}.dd.right{left:auto;right:0}
 .dd-label{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:8px 10px 4px}
 .dd-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:.12s;border:none;background:none;width:100%;text-align:left;font-family:var(--sans);color:var(--soft)}
-.dd-item:hover{background:var(--gold-dim);border-color:var(--gold-border)}
+.dd-item:hover{background:var(--gold-dim)}
 .dd-ico{width:30px;height:30px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:grid;place-items:center;flex-shrink:0}
 .dd-ico svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.dd-name{font-size:12.5px;font-weight:600;line-height:1.2}
-.dd-desc{font-size:10.5px;color:var(--muted);font-weight:400;margin-top:1px}
-.dd-ex{font-size:11.5px;color:var(--muted);font-weight:400;line-height:1.4;padding:9px 12px}
-.overlay{display:none;position:fixed;inset:0;z-index:90}
-.overlay.show{display:block}
+.dd-name{font-size:12.5px;font-weight:600;line-height:1.2}.dd-desc{font-size:10.5px;color:var(--muted);font-weight:400;margin-top:1px}
+.overlay{display:none;position:fixed;inset:0;z-index:90}.overlay.show{display:block}
 
-/* Responsive */
+/* ═══ RESPONSIVE ═══ */
 @media(max-width:820px){
-  .layout{grid-template-columns:1fr;gap:0;padding:6px}
-  .sidebar{display:none}
-  body{overflow:auto}
-  .layout{height:auto}
-  .chat-area{border-radius:14px;display:flex;flex-direction:column}
-  .chat-body{flex:none;padding:12px 12px 6px}
+  .layout{grid-template-columns:1fr !important;gap:0;padding:6px}.sidebar{display:none !important}
+  body{overflow:auto}.layout{height:auto}
+  .chat-area{border-radius:14px}.chat-body{flex:none;padding:12px 12px 6px}
   .empty{justify-content:flex-start;padding:24px 16px 16px}
-  .empty-mark{width:40px;height:40px;font-size:15px;margin-bottom:10px}
-  .empty h2{font-size:20px;margin-bottom:4px}
-  .empty p{font-size:12.5px}
-  .chat-head{flex-wrap:wrap;padding:10px 12px;gap:8px}
-  .head-pills{display:none}
-  .msg-bub{max-width:88%;font-size:13px}
-  .compose textarea{font-size:16px}
-  .compose{padding:10px 12px;border-radius:14px}
-  .input-wrap{padding:10px 12px}
-  .dd{min-width:260px}
-  .topbar{height:50px;padding:0 12px}
-  .topbar-name{font-size:13px}
-  .topbar-live{font-size:9px;padding:4px 9px}
-  .actions{gap:4px;margin-top:10px}
-  .act-btn{padding:8px 14px;font-size:13px;font-weight:700;border:1px solid var(--border);border-radius:10px}
-  .act-btn svg{width:16px;height:16px}
+  .empty-mark{width:40px;height:40px;font-size:15px;margin-bottom:10px}.empty h2{font-size:20px;margin-bottom:4px}.empty p{font-size:12.5px}
+  .chat-head{padding:10px 12px;gap:8px}.msg-bub{max-width:88%;font-size:13px}
+  .compose textarea{font-size:16px}.compose{padding:10px 12px}.input-wrap{padding:10px 12px}
+  .actions{gap:4px;margin-top:10px}.act-btn{padding:8px 14px;font-size:13px;font-weight:700;border:1px solid var(--border);border-radius:10px}.act-btn svg{width:16px;height:16px}
   .compose-send{width:36px;height:36px;font-size:18px;border-radius:10px}
+  .topbar{height:50px;padding:0 12px}.topbar-name{font-size:13px}.topbar-user{display:none}
+  .dd{min-width:260px}.head-btn{padding:4px 8px;font-size:10px}
 }
-@media(max-width:380px){
-  .mode-pill{padding:6px 12px;font-size:11px}
-  .act-btn{padding:4px 7px;font-size:10px}
-}
-
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
 </style>
 </head>
 <body>
-<div style="display:flex;flex-direction:column;height:100vh">
-  <!-- Top bar -->
-  <div class="topbar">
-    <div class="topbar-left">
-      <div class="av-mark">AV</div>
-      <div><div class="topbar-name">Action Ventures</div><div class="topbar-label">Intelligence Desk</div></div>
+
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-mark">AV</div>
+    <div class="login-title"><em>Intelligence Desk</em></div>
+    <div class="login-sub">Action Ventures Europe</div>
+    <div class="login-beta">Private Beta</div>
+    <input class="login-input" id="codeInput" type="text" placeholder="Enter access code" autocomplete="off" spellcheck="false">
+    <button class="login-btn" onclick="attemptLogin()">Access</button>
+    <div class="login-error" id="loginError"></div>
+    <div class="login-divider"></div>
+    <div class="login-waitlist">
+      Don't have an access code?<br>
+      <a href="https://action-ventures.base44.app/waitlist" target="_blank">Request early access →</a>
     </div>
-    <div class="topbar-live"><div class="topbar-dot"></div>LIVE AGENT</div>
   </div>
+</div>
 
-  <!-- Layout -->
-  <div class="layout">
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <div class="sb-card">
-        <div class="sb-label">Agent Mode</div>
-        <button class="sb-mode-btn active" id="sbFounder" onclick="switchMode('founder')"><strong>Founder Agent</strong><span>7 skills for fundraising</span></button>
-        <button class="sb-mode-btn" id="sbInvestor" onclick="switchMode('investor')"><strong>Investor Agent</strong><span>7 skills for deal intelligence</span></button>
-      </div>
-      <div class="sb-card">
-        <div class="sb-label">Active Skill</div>
-        <div class="sb-skill" id="sbSkill">None selected — general mode</div>
-      </div>
-      <div class="sb-card">
-        <div class="sb-label">Live Signals</div>
-        <div class="signal-grid" id="signalGrid"></div>
-      </div>
-      <div class="sb-card">
-        <div class="sb-label">About</div>
-        <div class="sb-info">This agent uses <strong>AI-powered analysis</strong> shaped by Action Ventures' operator lens. In production, outputs are <strong>human-reviewed</strong> before delivery.</div>
-      </div>
+<!-- ═══ APP (hidden until login) ═══ -->
+<div id="appWrap" style="display:none;height:100vh;display:none;flex-direction:column">
+  <div class="topbar">
+    <div class="topbar-left"><div class="av-mark">AV</div><div><div class="topbar-name">Intelligence Desk</div><div class="topbar-label">Action Ventures Europe</div></div></div>
+    <div class="topbar-right">
+      <div class="topbar-live"><div class="topbar-dot"></div>LIVE</div>
+      <span class="topbar-user" id="topUser"></span>
+      <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
-
-    <!-- Chat area -->
+  </div>
+  <div class="layout" id="layoutWrap">
+    <div class="sidebar" id="sidebarWrap">
+      <div class="sb-card"><div class="sb-label">Agent Mode</div>
+        <button class="sb-mode-btn active" id="sbFounder" onclick="switchMode('founder')"><strong>Founder Agent</strong><span>7 skills for fundraising</span></button>
+        <button class="sb-mode-btn" id="sbInvestor" onclick="switchMode('investor')"><strong>Investor Agent</strong><span>9 skills for deal intelligence</span></button>
+      </div>
+      <div class="sb-card"><div class="sb-label">Active Skill</div><div class="sb-skill" id="sbSkill">None selected</div></div>
+      <div class="sb-card"><div class="sb-label">Live Signals</div><div class="signal-grid" id="signalGrid"></div></div>
+      <div class="sb-card"><div class="sb-label">About</div><div class="sb-info"><strong>AI-powered analysis</strong> shaped by AV's operator lens. Outputs are <strong>human-reviewed</strong> in production.</div></div>
+    </div>
     <div class="chat-area">
       <div class="chat-head">
-        <div class="chat-head-left">
-          <div>
-            <div class="chat-head-title" id="chatTitle">Founder Agent</div>
-            <div class="chat-head-sub" id="chatSub">General mode</div>
-          </div>
+        <div class="chat-head-left"><div><div class="chat-head-title" id="chatTitle">Founder Agent</div><div class="chat-head-sub" id="chatSub">General mode</div></div></div>
+        <div class="head-btns">
+          <button class="head-btn" onclick="newChat()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New</button>
+          <button class="head-btn" onclick="exportChat()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button>
         </div>
-        <div style="display:flex;gap:6px;align-items:center">
-          <button class="act-btn" onclick="newChat()" style="border:1px solid var(--border)"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New</button>
-          <button class="act-btn" onclick="exportChat()" style="border:1px solid var(--border)"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button>
-          <div class="mode-pills">
+        <div class="mode-pills">
           <button class="mode-pill active" id="mpFounder" onclick="switchMode('founder')">Founder</button>
           <button class="mode-pill" id="mpInvestor" onclick="switchMode('investor')">Investor</button>
         </div>
-        </div>
-        <div class="head-pills">
-          <span class="head-pill head-pill-gold">AI-powered</span>
-          <span class="head-pill">Human-reviewed</span>
-        </div>
       </div>
-
-      <div class="chat-body" id="chatBody">
-        <div id="chatMessages"></div>
-      </div>
-
+      <div class="chat-body" id="chatBody"><div id="chatMessages"></div></div>
       <div class="input-wrap">
         <div class="chip-row">
           <div class="chip chip-skill" id="skillChip"><span id="skillChipText"></span><button onclick="clearSkill()">×</button></div>
@@ -245,196 +210,145 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font
 <div class="overlay" id="overlay" onclick="closeDD()"></div>
 
 <script>
-const ICO={
-  chart:'<svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>',
-  file:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
-  folder:'<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>',
-  mail:'<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>',
-  target:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
-  cpu:'<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>',
-  book:'<svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>',
-  search:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
-  heart:'<svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
-  clip:'<svg viewBox="0 0 24 24"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>',
-  globe:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>',
-  compass:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88"/></svg>',
-  help:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
-  bar:'<svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>'
+// ═══════════════════════════════════════════════
+// ACCESS CODES — edit this object to manage access
+// ═══════════════════════════════════════════════
+const CODES = {
+  // Admin codes — full access + sidebar + AV features
+  'AV-TONY':   {role:'admin', label:'Tony Ihander'},
+  'AV-SAM':    {role:'admin', label:'Sam Lindner'},
+
+  // Invite codes — full demo access, both agents
+  'AV-DEMO-1': {role:'invite', label:'Demo User 1'},
+  'AV-DEMO-2': {role:'invite', label:'Demo User 2'},
+  'AV-DEMO-3': {role:'invite', label:'Demo User 3'},
+  'AV-BETA-1': {role:'invite', label:'Beta Tester 1'},
+  'AV-BETA-2': {role:'invite', label:'Beta Tester 2'},
+  // Add more as needed — just add a line and redeploy
 };
 
+let currentUser = null; // {code, role, label}
+
+function attemptLogin() {
+  const code = document.getElementById('codeInput').value.trim().toUpperCase();
+  const entry = CODES[code];
+  if (!entry) {
+    document.getElementById('loginError').textContent = 'Invalid access code. Check your invite or request access below.';
+    return;
+  }
+  currentUser = { code, ...entry };
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('appWrap').style.display = 'flex';
+  document.getElementById('topUser').textContent = currentUser.label;
+
+  // Show/hide sidebar based on role
+  if (currentUser.role !== 'admin') {
+    document.getElementById('layoutWrap').classList.add('no-sidebar');
+    document.getElementById('sidebarWrap').style.display = 'none';
+  }
+
+  // Log access
+  fetch('/api/notify', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({code, timestamp: new Date().toISOString(), userAgent: navigator.userAgent})
+  }).catch(()=>{});
+
+  switchMode('founder');
+}
+
+function logout() {
+  currentUser = null;
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('appWrap').style.display = 'none';
+  document.getElementById('codeInput').value = '';
+  document.getElementById('loginError').textContent = '';
+}
+
+document.getElementById('codeInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') attemptLogin();
+});
+
+// ═══════════════════════════════════════════════
+// SKILLS + ICONS (same as before)
+// ═══════════════════════════════════════════════
+const ICO={chart:'<svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>',file:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',folder:'<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>',mail:'<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>',target:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',cpu:'<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>',book:'<svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>',search:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',heart:'<svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',clip:'<svg viewBox="0 0 24 24"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>',globe:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>',compass:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88"/></svg>',help:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',bar:'<svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>'};
+
 const SKILLS={founder:[
-{id:'f1',ico:'chart',name:'Readiness Assessment',desc:'5-dimension investor readiness score',ph:'Describe your startup — what you do, traction, stage, team, raise...',sys:'You are the Action Ventures Readiness Assessment Engine. Assess across 5 dimensions: Market Reality, Product & Traction, Team, Commercial Model, AI & Tech Leverage. Each scored /10.\n\nFormat:\n**INVESTOR READINESS ASSESSMENT**\n**Action Ventures Intelligence Desk**\n---\n**Company Snapshot:** [2-3 sentences]\n**Overall Readiness Score: [X]/10**\n---\n**1. Market Reality — [X]/10** [2-3 sentences]\n**2. Product & Traction — [X]/10** [2-3 sentences]\n**3. Team — [X]/10** [2-3 sentences]\n**4. Commercial Model — [X]/10** [2-3 sentences]\n**5. AI & Tech Leverage — [X]/10** [2-3 sentences]\n---\n**WHAT INVESTORS WILL LIKE** • 3 strengths\n**WHAT INVESTORS WILL QUESTION** • 3 objections\n**MISSING INFORMATION**\n---\n**30-DAY ACTION PLAN** 1-3 priorities\n**ACTION VENTURES NOTE**\n\nNever score above 8 without exceptional evidence. Be direct.'},
+{id:'f1',ico:'chart',name:'Readiness Assessment',desc:'5-dimension investor readiness score',ph:'Describe your startup \u2014 what you do, traction, stage, team, raise...',sys:'You are the Action Ventures Readiness Assessment Engine. You have web search \u2014 use it to verify the founder\'s claims. Search for their company on crunchbase.com and angellist.com to check existing funding, team, and competitors. Search for competitors in their sector. Cross-reference any metrics they claim.\n\nAssess across 5 dimensions: Market Reality, Product & Traction, Team, Commercial Model, AI & Tech Leverage. Each scored /10.\n\nFormat:\n**INVESTOR READINESS ASSESSMENT**\n**Action Ventures Intelligence Desk**\n---\n**Company Snapshot:** [2-3 sentences]\n**Overall Readiness Score: [X]/10**\n---\n**1. Market Reality \u2014 [X]/10** [2-3 sentences]\n**2. Product & Traction \u2014 [X]/10**\n**3. Team \u2014 [X]/10**\n**4. Commercial Model \u2014 [X]/10**\n**5. AI & Tech Leverage \u2014 [X]/10**\n---\n**WHAT INVESTORS WILL LIKE** \u2022 3 strengths\n**WHAT INVESTORS WILL QUESTION** \u2022 3 objections\n**MISSING INFORMATION**\n---\n**30-DAY ACTION PLAN** 1-3 priorities\n**ACTION VENTURES NOTE**\n\nNever score above 8 without exceptional evidence. Be direct.'},
 {id:'f2',ico:'file',name:'Pitch Deck Teardown',desc:'Slide-by-slide feedback & objection mapping',ph:'Paste your deck content or describe each slide...',sys:'You are the Action Ventures Deck Teardown Engine. Analyse slide by slide.\n\nFormat:\n**PITCH DECK TEARDOWN** | **Score: [X]/10**\n**First Impression:** [5-second test]\nPer slide: **Slide [N]: [Topic]** - Works / Doesn\'t / Investor reaction / Fix\n**MISSING SLIDES** | **NARRATIVE ASSESSMENT** | **OBJECTION MAP** (5) | **PRIORITY FIXES** (3)'},
-{id:'f3',ico:'folder',name:'Data Room Audit',desc:'Completeness scoring across 7 categories',ph:'List your data room documents or describe what you have...',sys:'You are the Action Ventures Data Room Audit Engine.\n\nFormat:\n**DATA ROOM AUDIT** | **Completeness: [X]%**\n7 categories (Financials, Legal, Product, Market, Team, Customers, Fundraising): status + present + missing\n**RED FLAGS** | **PRIORITY BUILD LIST** (5) | **FOLDER STRUCTURE**'},
-{id:'f4',ico:'mail',name:'Investor Update Drafter',desc:'Monthly KPIs → investor-ready update',ph:'Share metrics: revenue, burn, runway, wins, challenges, asks...',sys:'You are the Action Ventures Update Drafter. Under 400 words. Honest, not spin.\n\nFormat:\n**[COMPANY] — MONTHLY UPDATE** [Month Year]\n**HEADLINE** | **KEY METRICS** (table) | **HIGHLIGHTS** • 2-3 | **CHALLENGES** • 1-2 with actions | **PRODUCT** | **AHEAD** | **THE ASK**'},
-{id:'f5',ico:'target',name:'GTM Reality Check',desc:'Is your go-to-market credible?',ph:'Describe your GTM — acquisition, sales, pricing, channels...',sys:'You are the Action Ventures GTM Reality Check Engine.\n\nFormat:\n**GTM REALITY CHECK** | **Credibility: [X]/10**\nAssess: Acquisition, Sales Model, Pricing, Distribution, Positioning — stated vs reality.\n**HARD QUESTIONS** (5) | **30-DAY GTM SPRINT** (3 actions)'},
-{id:'f6',ico:'cpu',name:'AI Leverage Audit',desc:'Genuine advantage or AI lipstick?',ph:'Describe how your startup uses AI and its impact...',sys:'You are the Action Ventures AI Leverage Audit Engine.\n\nFormat:\n**AI LEVERAGE AUDIT** | **Verdict: [GENUINE/PARTIAL/LIPSTICK]** | **Score: [X]/10**\n5 dimensions: Margin Impact, Defensibility, Capability Creation ("intern test"), Data Advantage, Cost Structure.\n**INVESTOR PERCEPTION** | **RECOMMENDATIONS** (3)'},
-{id:'f7',ico:'book',name:'Fundraising Narrative',desc:'Build the story investors need to hear',ph:'Tell me about your company, problem, traction, team, raise...',sys:'You are the Action Ventures Narrative Builder.\n\nFormat:\n**FUNDRAISING NARRATIVE**\n**ONE-LINER** | **ELEVATOR PITCH** (30 sec)\n**NARRATIVE ARC:** Act 1-7 (Problem, Shift, Solution, Proof, Machine, Team, Ask)\n**INVESTOR EMAIL** (150 words + subject) | **OBJECTION PRE-EMPTS** (3) | **GAPS**'}
+{id:'f3',ico:'folder',name:'Data Room Audit',desc:'Completeness scoring across 7 categories',ph:'List your data room documents or describe what you have...',sys:'You are the Action Ventures Data Room Audit Engine.\n\nFormat:\n**DATA ROOM AUDIT** | **Completeness: [X]%**\n7 categories scored: Financials, Legal, Product, Market, Team, Customers, Fundraising.\n**RED FLAGS** | **PRIORITY BUILD LIST** (5) | **FOLDER STRUCTURE**'},
+{id:'f4',ico:'mail',name:'Investor Update Drafter',desc:'Monthly KPIs \u2192 investor-ready update',ph:'Share metrics: revenue, burn, runway, wins, challenges, asks...',sys:'You are the Action Ventures Update Drafter. Under 400 words. Honest, not spin.\n\nFormat:\n**[COMPANY] \u2014 MONTHLY UPDATE** [Month Year]\n**HEADLINE** | **KEY METRICS** (table) | **HIGHLIGHTS** \u2022 2-3 | **CHALLENGES** \u2022 1-2 | **PRODUCT** | **AHEAD** | **THE ASK**'},
+{id:'f5',ico:'target',name:'GTM Reality Check',desc:'Is your go-to-market credible?',ph:'Describe your GTM \u2014 acquisition, sales, pricing, channels...',sys:'You are the Action Ventures GTM Reality Check Engine. Use web search to verify EVERYTHING. Search competitor websites for real pricing pages. Search crunchbase.com for competitor funding and traction. Search G2.com and capterra.com for competitor reviews and market positioning. Ground every assessment in searched evidence, not assumptions.\n\nFormat:\n**GTM REALITY CHECK** | **Credibility: [X]/10**\nAssess: Acquisition, Sales Model, Pricing, Distribution, Positioning.\n**HARD QUESTIONS** (5) | **30-DAY GTM SPRINT** (3 actions)'},
+{id:'f6',ico:'cpu',name:'AI Leverage Audit',desc:'Genuine advantage or AI lipstick?',ph:'Describe how your startup uses AI and its impact...',sys:'You are the Action Ventures AI Leverage Audit Engine.\n\nFormat:\n**AI LEVERAGE AUDIT** | **Verdict: [GENUINE/PARTIAL/LIPSTICK]** | **Score: [X]/10**\n5 dimensions: Margin Impact, Defensibility, Capability Creation, Data Advantage, Cost Structure.\n**INVESTOR PERCEPTION** | **RECOMMENDATIONS** (3)'},
+{id:'f7',ico:'book',name:'Fundraising Narrative',desc:'Build the story investors need to hear',ph:'Tell me about your company, problem, traction, team, raise...',sys:'You are the Action Ventures Narrative Builder.\n\nFormat:\n**FUNDRAISING NARRATIVE**\n**ONE-LINER** | **ELEVATOR PITCH** (30 sec)\n**NARRATIVE ARC:** Act 1-7 (Problem, Shift, Solution, Proof, Machine, Team, Ask)\n**INVESTOR EMAIL** (150 words + subject) | **OBJECTION PRE-EMPTS** (3) | **GAPS**'},
+{id:'f8',ico:'search',name:'Investor Finder',desc:'Find matching investors from public databases',ph:'Describe your startup \u2014 sector, stage, geography, raise amount...',sys:'You are the Action Ventures Investor Finder. You MUST use web search extensively to find REAL investors who match this founder\'s profile.\n\nSearch these sources specifically:\n- openvc.app (7,000+ VC database with thesis, stage, sector filters)\n- angellist.com (startup/investor profiles)\n- angelspartners.com (angel investor database by sector/geography)\n- vcsheet.com (curated VC database)\n- privateequitylist.com (PE firms for later-stage)\n- crunchbase.com (investor profiles and recent activity)\n\nSearch at least 4-5 of these sources. Find REAL investors with REAL fund names.\n\nFormat:\n**INVESTOR MATCH REPORT**\n**Action Ventures Intelligence Desk**\n\n**Company Profile:** [1-2 sentence summary of the startup]\n**Search Criteria:** Stage: [X] | Sector: [X] | Geography: [X] | Raising: [\u20acX]\n\n---\n\n**TOP MATCHES**\n\nFor each investor (find 8-12):\n\n**[Fund/Investor Name]** | [Location]\n- **Type:** VC / Angel / Family Office / Syndicate\n- **Stage Focus:** [Pre-seed/Seed/Series A etc]\n- **Cheque Size:** [\u20acX-\u20acX]\n- **Sector Match:** [Why this investor fits this startup specifically]\n- **Portfolio Examples:** [2-3 relevant companies they have invested in]\n- **Fit Score:** [High/Medium/Low]\n- **Source:** [Which database this was found on]\n\n---\n\n**OUTREACH STRATEGY**\n- Best approach for each tier (warm intro vs cold vs event)\n- What to emphasise for this investor type\n- Common mistakes founders make approaching these investors\n\n**INVESTORS TO AVOID**\n[Any investors found who seem like a match but have red flags \u2014 inactive, bad reputation, wrong stage despite sector match]\n\n**ACTION VENTURES NOTE**\n[How AV\'s network could facilitate warm intros to any of these]\n\nIMPORTANT: Every investor listed must be REAL and found through search. Never fabricate investor names or fund names. If search returns limited results, say so honestly and suggest alternative search strategies.'}
 ],investor:[
-{id:'i1',ico:'search',name:'Deal Snapshot',desc:'Structured first-look assessment',ph:'Describe the company — what they do, stage, traction...',sys:'You are the Action Ventures Deal Snapshot Engine.\n\nFormat:\n**DEAL SNAPSHOT** | **Interest: [X]/10**\n**Company/Sector/Stage** | **One-Line Assessment**\n**WHAT THEY DO** | **INTERESTING** (3) | **CONCERNING** (3) | **METRICS** (table)\n**VERDICT:** Pass/Watch/First meeting/Fast-track [pick one]\n**DILIGENCE QUESTIONS** (5)'},
-{id:'i2',ico:'heart',name:'Portfolio Health Check',desc:'Traffic-light status with risk flags',ph:'List portfolio companies with key metrics...',sys:'You are the Action Ventures Portfolio Health Engine.\n\nFormat:\n**PORTFOLIO HEALTH CHECK** | Summary: Green/Amber/Red counts\nPer company: **[Name] — 🟢/🟡/🔴** status, metric, risk, action\n**INSIGHTS:** Concentration, runway alerts, patterns, follow-on\n**PRIORITIES** (3)'},
-{id:'i3',ico:'clip',name:'Family Office Brief',desc:'Plain-English briefing for private investors',ph:'Describe the company you want briefed...',sys:'You are the Action Ventures Family Office Brief Generator. No jargon. Plain English.\n\nFormat:\n**FAMILY OFFICE BRIEF** | Confidential\n**[COMPANY]** Sector · Stage · Location\n**PLAIN ENGLISH** (analogies) | **WHY IT MATTERS** | **NUMBERS** (table)\n**WORKING** (3-4) | **COULD GO WRONG** (3-4) | **TEAM**\n**AV ASSESSMENT:** Fit [X]/10, View, Next Steps'},
-{id:'i4',ico:'globe',name:'Sector Intelligence',desc:'Market overview with real data, trends, gaps',ph:'Name a sector — e.g. "AI in hospitality" or "European proptech"...',sys:'You are the Action Ventures Sector Intelligence Engine. You have web search — USE IT to ground every claim in real, current data. Search for market size reports, recent funding rounds, key players, and trend data. Never estimate when you can search.\n\nFormat:\n**SECTOR INTELLIGENCE BRIEF**\n**Action Ventures Intelligence Desk**\n\n**Sector / Relevance for Private Capital: High/Med/Low**\n\n**EXECUTIVE SUMMARY** [4-5 sentences grounded in searched data]\n\n**MARKET OVERVIEW**\n- Market size: [SEARCH for real numbers, cite source]\n- Growth rate: [real data]\n- Key geographies\n- Maturity: Emerging/Growing/Mature/Consolidating\n\n**RECENT FUNDING ACTIVITY** [Search for last 6 months of deals in this sector]\n- Notable rounds with amounts, investors, dates\n- Funding trend: accelerating/stable/cooling\n\n**KEY PLAYERS** (table: Company | Stage | Funding | What they do)\n[Search for the actual top 5-8 companies]\n\n**MARKET DRIVERS** [3 trends backed by searched evidence]\n\n**OPPORTUNITY GAPS** [3-4 specific underserved segments]\n\n**TRAPS** [3-4 over-funded areas or common mistakes]\n\n**INVESTMENT THESIS SUGGESTION** [Specific: stage, geo, sub-vertical, cheque size, what to screen for]\n\nEvery number should come from a search, not from memory. Cite sources where possible.'},
-{id:'i5',ico:'compass',name:'Thesis Calibration',desc:'Stress-test your investment thesis',ph:'Describe your focus — sectors, stage, geography, cheque size...',sys:'You are the Action Ventures Thesis Calibration Engine.\n\nFormat:\n**THESIS CALIBRATION**\nProfile table: Stage/Sectors/Geo/Cheque/Ownership — stated vs AV assessment\n**REALLY LOOKING FOR** | **SCREENING:** Must-haves/Signals/Red flags (3 each)\n**BLIND SPOTS** (3) | **TENSIONS** | **DEAL FLOW EXPECTATIONS**'},
-{id:'i6',ico:'help',name:'Due Diligence Questions',desc:'Tailored questions by category',ph:'Describe the deal — company, sector, concerns...',sys:'You are the Action Ventures Due Diligence Engine. Specific to THIS deal.\n\nFormat:\n**DD QUESTION SET**\n**CRITICAL** (5 with why each matters)\n**BY CATEGORY:** Market(3), Product(3), Financials(3), Customers(3), Team(3), Legal(3)\n**REFERENCE CHECKS** (3) | **GOOD vs RED FLAG ANSWERS**'},
-{id:'i7',ico:'bar',name:'LP Update Drafter',desc:'Quarterly report for LPs',ph:'Share quarterly highlights, metrics, developments...',sys:'You are the Action Ventures LP Update Drafter. Under 800 words. Never hide bad news.\n\nFormat:\n**[FUND] — Q[X] UPDATE** | Confidential\n**SUMMARY** | **PORTFOLIO** (table) | **HIGHLIGHTS** (3) / **CHALLENGES** (2)\nPer company: **[Name] — 🟢/🟡/🔴** [2-4 sentences]\n**ACTIVITY** | **MARKET** | **AHEAD**'},
-{id:'i8',ico:'search',name:'Funding News',desc:'Structured funding activity by sector/region',ph:'Search a sector, region, or company — e.g. "AI hospitality Europe Q2 2026"...',sys:'You are the Action Ventures Funding News Engine. You MUST use web search to find real, current funding data. Search Crunchbase, Tech.eu, EU-Startups, Sifted, TechCrunch, and other startup news sources.\n\nFor every query, search multiple times to build a comprehensive picture. Search for recent funding rounds, acquisitions, and notable deals.\n\nRespond with this EXACT structure:\n\n**FUNDING NEWS BRIEF**\n**Action Ventures Intelligence Desk**\n**Period:** [timeframe searched]\n\n---\n\n**HEADLINE DEALS**\nFor each significant deal found:\n\n**[Company Name]** | [Country]\n- **Round:** [Seed/Series A/etc]\n- **Amount:** [€X]\n- **Lead Investor(s):** [Names]\n- **Other Investors:** [Names]\n- **Sector:** [Specific vertical]\n- **Core Product:** [One sentence]\n- **Competitors:** [2-3 named competitors]\n- **AV Take:** [One sentence — why this matters for Tony network]\n\n---\n\n**SECTOR SUMMARY**\n- Total deals found: [N]\n- Total capital raised: [€X]\n- Most active sector: [X]\n- Most active region: [X]\n- Average round size: [€X]\n- Trend vs. previous quarter: [Up/Down/Stable]\n\n**NOTABLE PATTERNS**\n• [3-4 patterns across the deals — what investors are backing, what is cooling, emerging themes]\n\n**ONES TO WATCH**\n• [2-3 companies that are pre-funding but showing signals — hiring, product launches, partnerships]\n\n---\n\nThis output is designed to be directly usable in AV newsletters and investor reports. Every deal must be real and verified through search. Never fabricate funding data.'},
-{id:'i9',ico:'mail',name:'Network Briefing',desc:'Newsletter-ready update for Tony\'s network',ph:'What should this briefing cover? e.g. "AI in European hospitality — May 2026"...',sys:'You are the Action Ventures Network Briefing Compiler. You create polished, newsletter-ready briefings that Tony Ihander can send to his investor and founder network to demonstrate that Action Ventures has its finger on the pulse.\n\nYou MUST use web search extensively — search for recent deals, market developments, notable launches, regulatory changes, and sector trends. Search at least 5-6 different queries to build a comprehensive picture.\n\nRespond with this EXACT structure:\n\n**ACTION VENTURES INTELLIGENCE BRIEFING**\n**[Topic/Sector] — [Month Year]**\n\n---\n\n**FROM THE DESK OF ACTION VENTURES**\n[2-3 sentence editorial intro — Tony\'s perspective on what matters this month. Written in first person plural "we". Confident, opinionated, concise.]\n\n---\n\n**THE HEADLINE**\n[The single most important development this month — 3-4 sentences with context on why it matters for private capital.]\n\n**DEALS THAT MATTER**\n[3-5 recent funding rounds or exits with one-line analysis each. Format: **Company** (Sector, Country) — Round, Amount — *Why it matters*]\n\n**MARKET SIGNALS**\n• [4-5 bullet points: trends, data points, shifts that sophisticated investors should know about. Each grounded in searched evidence.]\n\n**WHAT WE ARE WATCHING**\n• [3-4 things Action Ventures is paying attention to — companies, trends, regulatory developments. Forward-looking.]\n\n**THE CONTRARIAN VIEW**\n[1-2 sentences — something the market believes that AV disagrees with, or an underappreciated risk/opportunity. Shows independent thinking.]\n\n---\n\n**ABOUT THIS BRIEFING**\nPrepared by Action Ventures Intelligence Desk. For enquiries: [contact@actionventures.eu]\n\n---\n\nTone: Authoritative, concise, opinionated. Tony is sending this to family offices, angels, and founders — people who receive 50 newsletters and read 3. This one needs to be worth reading. Every claim backed by searched data. Under 600 words total.'}
+{id:'i1',ico:'search',name:'Deal Snapshot',desc:'Structured first-look assessment',ph:'Describe the company \u2014 what they do, stage, traction...',sys:'You are the Action Ventures Deal Snapshot Engine. Use web search to verify everything. Search crunchbase.com for funding history and existing investors. Search angellist.com for team and company profile. Search competitors on their public websites. Check intellizence.com for recent signals (hiring, partnerships, launches). Never take claims at face value.\n\nFormat:\n**DEAL SNAPSHOT** | **Interest: [X]/10**\n**Company/Sector/Stage** | **One-Line Assessment**\n**WHAT THEY DO** | **INTERESTING** (3) | **CONCERNING** (3) | **METRICS** (table)\n**VERDICT:** Pass/Watch/First meeting/Fast-track [pick one]\n**DILIGENCE QUESTIONS** (5)'},
+{id:'i2',ico:'heart',name:'Portfolio Health Check',desc:'Traffic-light status with risk flags',ph:'List portfolio companies with key metrics...',sys:'You are the Action Ventures Portfolio Health Engine.\n\nFormat:\n**PORTFOLIO HEALTH CHECK** | Summary: Green/Amber/Red counts\nPer company: **[Name] \u2014 \ud83d\udfe2/\ud83d\udfe1/\ud83d\udd34** status, metric, risk, action\n**INSIGHTS** | **PRIORITIES** (3)'},
+{id:'i3',ico:'clip',name:'Family Office Brief',desc:'Plain-English briefing for private investors',ph:'Describe the company you want briefed...',sys:'You are the Action Ventures Family Office Brief Generator. No jargon. Plain English.\n\nFormat:\n**FAMILY OFFICE BRIEF** | Confidential\n**[COMPANY]** Sector \u00b7 Stage \u00b7 Location\n**PLAIN ENGLISH** | **WHY IT MATTERS** | **NUMBERS** (table)\n**WORKING** (3-4) | **COULD GO WRONG** (3-4) | **TEAM**\n**AV ASSESSMENT:** Fit [X]/10, View, Next Steps'},
+{id:'i4',ico:'globe',name:'Sector Intelligence',desc:'Market overview with real data, trends, gaps',ph:'Name a sector \u2014 e.g. "AI in hospitality"...',sys:'You are the Action Ventures Sector Intelligence Engine. You MUST use web search extensively. Search ALL of these:\n- crunchbase.com (funding data, company profiles)\n- intellizence.com (business signals, hiring, partnerships)\n- vcnewsdaily.com (VC landscape, fund activity)\n- thevccorner.com (VC analysis and content)\n- tech.eu and sifted.eu (European market data)\n- statista.com (market sizing)\n\nSearch at least 5-6 sources. Never estimate when you can search.\n\nFormat:\n**SECTOR INTELLIGENCE BRIEF**\n**Sector / Relevance: High/Med/Low**\n**SUMMARY** | **MARKET** (real numbers, cite sources) | **RECENT FUNDING** (search for actual deals)\n**KEY PLAYERS** (table: Company, Stage, Funding, What they do)\n**DRIVERS** (3) | **OPPORTUNITY** (3-4 gaps) | **TRAPS** (3-4)\n**THESIS SUGGESTION**\n**ACTIVE INVESTORS IN THIS SECTOR** [Search openvc.app and vcsheet.com for VCs focused on this sector]'},
+{id:'i5',ico:'compass',name:'Thesis Calibration',desc:'Stress-test your investment thesis',ph:'Describe your focus \u2014 sectors, stage, geography, cheque size...',sys:'You are the Action Ventures Thesis Calibration Engine.\n\nFormat:\n**THESIS CALIBRATION**\nProfile table: Stage/Sectors/Geo/Cheque/Ownership \u2014 stated vs AV assessment\n**REALLY LOOKING FOR** | **SCREENING:** Must-haves/Signals/Red flags (3 each)\n**BLIND SPOTS** (3) | **TENSIONS** | **DEAL FLOW EXPECTATIONS**'},
+{id:'i6',ico:'help',name:'Due Diligence Questions',desc:'Tailored questions by category',ph:'Describe the deal \u2014 company, sector, concerns...',sys:'You are the Action Ventures Due Diligence Engine. Specific to THIS deal.\n\nFormat:\n**DD QUESTION SET**\n**CRITICAL** (5 with why each matters)\n**BY CATEGORY:** Market(3), Product(3), Financials(3), Customers(3), Team(3), Legal(3)\n**REFERENCE CHECKS** (3) | **GOOD vs RED FLAG ANSWERS**'},
+{id:'i7',ico:'bar',name:'LP Update Drafter',desc:'Quarterly report for LPs',ph:'Share quarterly highlights, metrics, developments...',sys:'You are the Action Ventures LP Update Drafter. Under 800 words. Never hide bad news.\n\nFormat:\n**[FUND] \u2014 Q[X] UPDATE** | Confidential\n**SUMMARY** | **PORTFOLIO** (table) | **HIGHLIGHTS** (3) / **CHALLENGES** (2)\nPer company: **[Name] \u2014 \ud83d\udfe2/\ud83d\udfe1/\ud83d\udd34** [2-4 sentences]\n**ACTIVITY** | **MARKET** | **AHEAD**'},
+{id:'i8',ico:'search',name:'Funding News',desc:'Structured funding activity by sector/region',ph:'Search a sector, region \u2014 e.g. "AI hospitality Europe Q2 2026"...',sys:'You are the Action Ventures Funding News Engine. You MUST use web search extensively to find real funding data. Search ALL of these sources:\n- crunchbase.com (primary funding database)\n- techcrunch.com (funding announcements)\n- tech.eu (European startup funding)\n- sifted.eu (European tech news)\n- vcnewsdaily.com (daily VC news)\n- eu-startups.com (European deals)\n- intellizence.com (business signals)\n- 8fundraising.substack.com (fundraising intelligence)\n\nSearch at least 5-6 of these sources for each query.\n\nFormat:\n**FUNDING NEWS BRIEF**\n**Period:** [timeframe]\n\nPer deal:\n**[Company]** | [Country]\n- Round / Amount / Lead Investor(s) / Sector / Core Product / Competitors / AV Take\n\n**SECTOR SUMMARY** (total deals, capital, most active sector/region, trend)\n**PATTERNS** (3-4) | **ONES TO WATCH** (2-3)\n\nEvery deal must be real and verified through search. Never fabricate funding data.'},
+{id:'i9',ico:'mail',name:'Network Briefing',desc:'Newsletter-ready update for the AV network',ph:'What topic? e.g. "AI in European hospitality \u2014 May 2026"...',sys:'You are the Action Ventures Network Briefing Compiler. Create polished, newsletter-ready briefings. Use web search extensively. Search ALL of these:\n- crunchbase.com and techcrunch.com (deals)\n- vcnewsdaily.com (VC news)\n- thevccorner.com (VC analysis)\n- sifted.eu and tech.eu (European tech)\n- 8fundraising.substack.com (fundraising intel)\n- intellizence.com (business signals)\n- startupsavant.com (startup trends)\n\nSearch at least 6-8 queries across these sources.\n\nFormat:\n**ACTION VENTURES INTELLIGENCE BRIEFING**\n**[Topic] \u2014 [Month Year]**\n\n**FROM THE DESK OF ACTION VENTURES** [2-3 sentences, first person plural, opinionated]\n**THE HEADLINE** [Most important development]\n**DEALS THAT MATTER** [3-5 recent rounds with one-line analysis]\n**MARKET SIGNALS** \u2022 4-5 data-backed bullets\n**WHAT WE ARE WATCHING** \u2022 3-4 forward-looking items\n**THE CONTRARIAN VIEW** [1-2 sentences \u2014 something the market believes that AV disagrees with]\n\nUnder 600 words. Every claim backed by search. Authoritative, concise.'}
 ]};
 
 const EXAMPLES={founder:["We're a B2B SaaS in AI-powered hotel revenue management, \u20ac30k MRR, raising a \u20ac2M seed","Travel marketplace connecting local guides with tourists, 50k downloads, pre-revenue, seeking \u20ac500k","AI due diligence platform for VCs, beta with 3 pilot customers"],investor:["Family office focused on AI + hospitality, \u20ac100k-500k tickets, European early-stage","Angel in travel-tech and marketplaces, pre-seed to seed","VC looking at B2B SaaS proptech/fintech, Series A, \u20ac2-5M"]};
-
 const SIGS={founder:[{l:"Readiness",v:"\u2014",c:"var(--gold)"},{l:"Data Room",v:"\u2014",c:"var(--muted)"},{l:"Match",v:"\u2014",c:"var(--muted)"},{l:"Risk",v:"\u2014",c:"var(--muted)"}],investor:[{l:"Deal Flow",v:"\u2014",c:"var(--gold)"},{l:"Match",v:"\u2014",c:"var(--muted)"},{l:"Intel",v:"Ready",c:"var(--green)"},{l:"Network",v:"Active",c:"var(--green)"}]};
 
+// ═══════════════════════════════════════════════
+// STATE + CORE FUNCTIONS
+// ═══════════════════════════════════════════════
 let mode='founder',skill=null,msgs={founder:[],investor:[]},loading=false,pendingFile=null,recognition=null,isRec=false;
 const $=id=>document.getElementById(id);
 
 function renderSigs(s){$('signalGrid').innerHTML=s.map(x=>'<div class="signal-cell"><div class="signal-val" style="color:'+x.c+'">'+x.v+'</div><div class="signal-lbl">'+x.l+'</div></div>').join('')}
-
-function renderEmpty(){
-  $('chatMessages').innerHTML='<div class="empty"><div class="empty-mark">AV</div><h2>'+(mode==='founder'?'What can we help you <em>build</em>?':'What deal intelligence do you <em>need</em>?')+'</h2><p>Type a question, select a skill, or try an example prompt.</p></div>';
-}
-
-function renderMsgs(){
-  const el=$('chatMessages');
-  el.innerHTML=msgs[mode].map(m=>m.role==='user'?'<div class="msg user"><div class="msg-bub">'+esc(m.content)+'</div></div>':'<div class="msg agent"><div class="msg-av">AV</div><div class="msg-bub">'+fmt(m.content)+'</div></div>').join('');
-  if(loading)el.innerHTML+='<div class="msg agent"><div class="msg-av">AV</div><div class="msg-bub"><div class="typing"><span></span><span></span><span></span></div></div></div>';
-  $('chatBody').scrollTop=$('chatBody').scrollHeight;
-}
-
-function fmt(t){return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/^[•\-] (.+)$/gm,'<div style="padding-left:14px;margin:2px 0">\u2022 $1</div>').replace(/^(\d+)\. (.+)$/gm,'<div style="padding-left:14px;margin:2px 0">$1. $2</div>').replace(/---/g,'<hr>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}
+function renderEmpty(){$('chatMessages').innerHTML='<div class="empty"><div class="empty-mark">AV</div><h2>'+(mode==='founder'?'What can we help you <em>build</em>?':'What deal intelligence do you <em>need</em>?')+'</h2><p>Type a question, select a skill, or try an example prompt.</p></div>'}
+function renderMsgs(){const el=$('chatMessages');el.innerHTML=msgs[mode].map(m=>m.role==='user'?'<div class="msg user"><div class="msg-bub">'+esc(m.content)+'</div></div>':'<div class="msg agent"><div class="msg-av">AV</div><div class="msg-bub">'+fmt(m.content)+'</div></div>').join('');if(loading)el.innerHTML+='<div class="msg agent"><div class="msg-av">AV</div><div class="msg-bub"><div class="typing"><span></span><span></span><span></span></div></div></div>';$('chatBody').scrollTop=$('chatBody').scrollHeight}
+function fmt(t){return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/^[\u2022\-] (.+)$/gm,'<div style="padding-left:14px;margin:2px 0">\u2022 $1</div>').replace(/^(\d+)\. (.+)$/gm,'<div style="padding-left:14px;margin:2px 0">$1. $2</div>').replace(/---/g,'<hr>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}
 function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
 function autoGrow(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px'}
 function updateSend(){$('sendBtn').classList.toggle('active',!!( ($('chatInput').value.trim()||pendingFile)&&!loading))}
 
-function newChat(){
-  msgs[mode]=[];skill=null;loading=false;
-  clearSkill();removeFile();renderEmpty();
-  $('chatInput').focus();
-  updateSend();
-}
+function newChat(){msgs[mode]=[];skill=null;loading=false;clearSkill();removeFile();renderEmpty();$('chatInput').focus();updateSend()}
+function exportChat(){if(!msgs[mode].length){alert('No conversation to export.');return}const ml=mode==='founder'?'Founder Agent':'Investor Agent';const sl=skill?skill.name:'General';const now=new Date();let md='# Action Ventures Intelligence Desk\n**Mode:** '+ml+' | **Skill:** '+sl+' | **Date:** '+now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+'\n\n---\n\n';msgs[mode].forEach(m=>{md+=m.role==='user'?'## You\n\n'+m.content+'\n\n':'## Action Ventures\n\n'+m.content+'\n\n---\n\n'});const blob=new Blob([md],{type:'text/markdown'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='AV-'+ml.replace(/\s/g,'-')+'-'+now.toISOString().split('T')[0]+'.md';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url)}
 
-function exportChat(){
-  if(!msgs[mode].length){alert('No conversation to export.');return}
-  const modeLabel=mode==='founder'?'Founder Agent':'Investor Agent';
-  const skillLabel=skill?skill.name:'General';
-  const now=new Date();
-  const date=now.toISOString().split('T')[0];
-  const time=now.toTimeString().split(' ')[0].replace(/:/g,'-');
-  let md='# Action Ventures Intelligence Desk\n';
-  md+='**Mode:** '+modeLabel+' | **Skill:** '+skillLabel+' | **Date:** '+now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+'\n\n---\n\n';
-  msgs[mode].forEach(m=>{
-    if(m.role==='user'){md+='## You\n\n'+m.content+'\n\n'}
-    else{md+='## Action Ventures\n\n'+m.content+'\n\n---\n\n'}
-  });
-  md+='\n*Exported from Action Ventures Intelligence Desk*\n';
-  const blob=new Blob([md],{type:'text/markdown'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='AV-'+modeLabel.replace(/\s/g,'-')+'-'+date+'-'+time+'.md';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
+function switchMode(m){mode=m;skill=null;loading=false;$('sbFounder').classList.toggle('active',m==='founder');$('sbInvestor').classList.toggle('active',m==='investor');$('mpFounder').classList.toggle('active',m==='founder');$('mpInvestor').classList.toggle('active',m==='investor');$('chatTitle').textContent=m==='founder'?'Founder Agent':'Investor Agent';clearSkill();removeFile();if(msgs[mode].length>0){renderMsgs()}else{renderEmpty()}renderSigs(SIGS[m]);$('chatInput').placeholder=m==='founder'?'Describe your startup or ask anything...':'Ask about deals, portfolios, sectors...';updateSend()}
 
-function switchMode(m){
-  mode=m;skill=null;loading=false;
-  $('sbFounder').classList.toggle('active',m==='founder');
-  $('sbInvestor').classList.toggle('active',m==='investor');
-  $('mpFounder').classList.toggle('active',m==='founder');
-  $('mpInvestor').classList.toggle('active',m==='investor');
-  $('chatTitle').textContent=m==='founder'?'Founder Agent':'Investor Agent';
-  clearSkill();removeFile();
-  if(msgs[mode].length>0){renderMsgs()}else{renderEmpty()}
-  renderSigs(SIGS[m]);
-  $('chatInput').placeholder=m==='founder'?'Describe your startup or ask anything...':'Ask about deals, portfolios, sectors...';
-  updateSend();
-}
-
-function buildSkillsDD(){
-  $('skillsDD').innerHTML='<div class="dd-label">'+(mode==='founder'?'Founder':'Investor')+' Skills</div>'+SKILLS[mode].map(s=>'<button class="dd-item" onclick="pickSkill(\''+s.id+'\')"><div class="dd-ico">'+ICO[s.ico]+'</div><div><div class="dd-name">'+s.name+'</div><div class="dd-desc">'+s.desc+'</div></div></button>').join('');
-}
-function buildExDD(){
-  $('examplesDD').innerHTML='<div class="dd-label">Try an example</div>'+EXAMPLES[mode].map(e=>'<button class="dd-item" onclick="useEx(this)" data-ex="'+e.replace(/"/g,'&quot;')+'"><div class="dd-ex">\u201c'+e+'\u201d</div></button>').join('');
-}
-function pickSkill(id){
-  const s=SKILLS[mode].find(x=>x.id===id);if(!s)return;
-  skill=s;
-  $('skillChipText').textContent=s.name;$('skillChip').classList.add('show');
-  $('chatInput').placeholder=s.ph;
-  $('chatSub').textContent=s.name;
-  $('sbSkill').innerHTML='<strong>'+s.name+'</strong><br><span style="font-size:11px;color:var(--muted)">'+s.desc+'</span>';
-  closeDD();$('chatInput').focus();
-}
-function clearSkill(){
-  skill=null;$('skillChip').classList.remove('show');
-  $('chatSub').textContent='General mode';
-  $('sbSkill').textContent='None selected \u2014 general mode';
-  $('chatInput').placeholder=mode==='founder'?'Describe your startup or ask anything...':'Ask about deals, portfolios, sectors...';
-}
+function buildSkillsDD(){$('skillsDD').innerHTML='<div class="dd-label">'+(mode==='founder'?'Founder':'Investor')+' Skills</div>'+SKILLS[mode].map(s=>'<button class="dd-item" onclick="pickSkill(\''+s.id+'\')"><div class="dd-ico">'+ICO[s.ico]+'</div><div><div class="dd-name">'+s.name+'</div><div class="dd-desc">'+s.desc+'</div></div></button>').join('')}
+function buildExDD(){$('examplesDD').innerHTML='<div class="dd-label">Try an example</div>'+EXAMPLES[mode].map(e=>'<button class="dd-item" onclick="useEx(this)" data-ex="'+e.replace(/"/g,'&quot;')+'"><div style="font-size:11.5px;color:var(--muted);line-height:1.4">\u201c'+e+'\u201d</div></button>').join('')}
+function pickSkill(id){const s=SKILLS[mode].find(x=>x.id===id);if(!s)return;skill=s;$('skillChipText').textContent=s.name;$('skillChip').classList.add('show');$('chatInput').placeholder=s.ph;$('chatSub').textContent=s.name;$('sbSkill').innerHTML='<strong>'+s.name+'</strong><br><span style="font-size:11px;color:var(--muted)">'+s.desc+'</span>';closeDD();$('chatInput').focus()}
+function clearSkill(){skill=null;$('skillChip').classList.remove('show');$('chatSub').textContent='General mode';$('sbSkill').textContent='None selected';$('chatInput').placeholder=mode==='founder'?'Describe your startup or ask anything...':'Ask about deals, portfolios, sectors...'}
 function useEx(el){$('chatInput').value=el.dataset.ex;autoGrow($('chatInput'));updateSend();closeDD();$('chatInput').focus()}
 function toggleDD(w){const d=$(w+'DD');const show=!d.classList.contains('show');closeDD();if(show){w==='skills'?buildSkillsDD():buildExDD();d.classList.add('show');$('overlay').classList.add('show')}}
 function closeDD(){$('skillsDD').classList.remove('show');$('examplesDD').classList.remove('show');$('overlay').classList.remove('show')}
 
-function handleFile(ev){
-  const f=ev.target.files[0];if(!f)return;
-  if(f.size>10*1024*1024){alert('Max 10MB');return}
-  const r=new FileReader();
-  r.onload=function(e){
-    const b64=e.target.result.split(',')[1];let mt=f.type;
-    if(f.name.endsWith('.pdf'))mt='application/pdf';
-    if(f.name.match(/\.(csv|txt|md|json)$/i)){const tr=new FileReader();tr.onload=function(te){pendingFile={name:f.name,type:'text',content:te.target.result};showFile(f.name)};tr.readAsText(f);return}
-    pendingFile={name:f.name,type:'binary',base64:b64,mediaType:mt};showFile(f.name);
-  };r.readAsDataURL(f);ev.target.value='';
-}
+function handleFile(ev){const f=ev.target.files[0];if(!f)return;if(f.size>10*1024*1024){alert('Max 10MB');return}const r=new FileReader();r.onload=function(e){const b64=e.target.result.split(',')[1];let mt=f.type;if(f.name.endsWith('.pdf'))mt='application/pdf';if(f.name.match(/\.(csv|txt|md|json)$/i)){const tr=new FileReader();tr.onload=function(te){pendingFile={name:f.name,type:'text',content:te.target.result};showFile(f.name)};tr.readAsText(f);return}pendingFile={name:f.name,type:'binary',base64:b64,mediaType:mt};showFile(f.name)};r.readAsDataURL(f);ev.target.value=''}
 function showFile(n){$('fileChipText').textContent='\ud83d\udcce '+n;$('fileChip').classList.add('show');updateSend()}
 function removeFile(){pendingFile=null;$('fileChip').classList.remove('show');updateSend()}
-
-function toggleVoice(){
-  if(isRec){stopV();return}
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){alert('Voice not supported. Try Chrome/Safari.');return}
-  recognition=new SR();recognition.lang='en-US';recognition.interimResults=true;recognition.continuous=true;
-  recognition.onresult=function(ev){let t='';for(let i=0;i<ev.results.length;i++)t+=ev.results[i][0].transcript;$('chatInput').value=t;autoGrow($('chatInput'));updateSend()};
-  recognition.onerror=function(){stopV()};recognition.onend=function(){stopV()};
-  recognition.start();isRec=true;$('micBtn').classList.add('recording');
-}
+function toggleVoice(){if(isRec){stopV();return}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('Voice not supported. Try Chrome/Safari.');return}recognition=new SR();recognition.lang='en-US';recognition.interimResults=true;recognition.continuous=true;recognition.onresult=function(ev){let t='';for(let i=0;i<ev.results.length;i++)t+=ev.results[i][0].transcript;$('chatInput').value=t;autoGrow($('chatInput'));updateSend()};recognition.onerror=function(){stopV()};recognition.onend=function(){stopV()};recognition.start();isRec=true;$('micBtn').classList.add('recording')}
 function stopV(){if(recognition){recognition.stop();recognition=null}isRec=false;$('micBtn').classList.remove('recording')}
 
-async function sendMessage(){
-  const inp=$('chatInput'),text=inp.value.trim();
-  if((!text&&!pendingFile)||loading)return;
-  if(isRec)stopV();
-  let sys=skill?skill.sys:(mode==='founder'?'You are the Action Ventures Founder Agent. Provide structured, operator-grade analysis for founders. Be direct, specific, commercial. Use clear headers and bullets. You have web search available — use it to verify claims, check competitors, and ground analysis in real data.':'You are the Action Ventures Investor Agent. Provide structured deal intelligence. Be sharp, opinionated. Use clear headers and bullets. You have web search available — use it to look up companies, funding rounds, market data, and verify claims.');
-  let uc,disp=text;
-  if(pendingFile){
-    if(pendingFile.type==='text'){uc='[File: '+pendingFile.name+']\n\n'+pendingFile.content+'\n\n'+(text||'Analyse this file.');disp=(text||'Analyse file')+' \ud83d\udcce '+pendingFile.name}
-    else if(pendingFile.mediaType==='application/pdf'){uc=[{type:'document',source:{type:'base64',media_type:'application/pdf',data:pendingFile.base64}},{type:'text',text:text||'Analyse this document.'}];disp=(text||'Analyse document')+' \ud83d\udcce '+pendingFile.name}
-    else{uc=[{type:'image',source:{type:'base64',media_type:pendingFile.mediaType,data:pendingFile.base64}},{type:'text',text:text||'Analyse this image.'}];disp=(text||'Analyse image')+' \ud83d\udcce '+pendingFile.name}
-  }else{uc=text}
-  msgs[mode].push({role:'user',content:disp});
-  const apiMsg={role:'user',content:uc};
-  inp.value='';inp.style.height='auto';removeFile();loading=true;updateSend();renderMsgs();
-  try{
-    const am=msgs[mode].slice(0,-1).map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.content}));am.push(apiMsg);
-    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:am,system:sys})});
-    const rawText=await res.text();
-    let data;
-    try{data=JSON.parse(rawText)}catch(pe){throw new Error('Function error: '+rawText.substring(0,150))}
-    if(!res.ok)throw new Error(data.error||'API error '+res.status);
-    const at=data.content?data.content.filter(b=>b.type==='text').map(b=>b.text).join('\n'):'Unable to generate.';
-    msgs[mode].push({role:'assistant',content:at});
-    // Update signals
-    const sm=at.match(/(?:Readiness|Overall.*?)Score[:\s]*\**(\d+)\/10/i);
-    if(sm&&mode==='founder'){const s=parseInt(sm[1]);const c=s>=7?'var(--green)':s>=5?'var(--gold)':'var(--red)';renderSigs([{l:"Readiness",v:s+"/10",c},{l:"Data Room",v:"Flagged",c:"var(--gold)"},{l:"Match",v:"Processing",c:"var(--blue)"},{l:"Risk",v:s>=7?"Low":s>=5?"Medium":"High",c}])}
-    const im=at.match(/Interest.*?Score[:\s]*\**(\d+)\/10/i);
-    if(im&&mode==='investor'){const s=parseInt(im[1]);renderSigs([{l:"Interest",v:s+"/10",c:s>=7?'var(--green)':s>=5?'var(--gold)':'var(--red)'},{l:"Match",v:"Scored",c:"var(--green)"},{l:"Intel",v:"Updated",c:"var(--green)"},{l:"Network",v:"Active",c:"var(--green)"}])}
-  }catch(e){msgs[mode].push({role:'assistant',content:'Error: '+e.message+'. Check your API key and Vercel function logs.'})}
-  finally{loading=false;updateSend();renderMsgs()}
-}
+async function sendMessage(){const inp=$('chatInput'),text=inp.value.trim();if((!text&&!pendingFile)||loading)return;if(isRec)stopV();
+let sys=skill?skill.sys:(mode==='founder'?'You are the Action Ventures Founder Agent. Provide structured, operator-grade analysis. Be direct, specific, commercial. You have web search \u2014 use it to verify claims and check competitors.':'You are the Action Ventures Investor Agent. Provide structured deal intelligence. Be sharp, opinionated. You have web search \u2014 use it to look up companies, funding, and market data.');
+let uc,disp=text;
+if(pendingFile){if(pendingFile.type==='text'){uc='[File: '+pendingFile.name+']\n\n'+pendingFile.content+'\n\n'+(text||'Analyse this file.');disp=(text||'Analyse file')+' \ud83d\udcce '+pendingFile.name}else if(pendingFile.mediaType==='application/pdf'){uc=[{type:'document',source:{type:'base64',media_type:'application/pdf',data:pendingFile.base64}},{type:'text',text:text||'Analyse this document.'}];disp=(text||'Analyse document')+' \ud83d\udcce '+pendingFile.name}else{uc=[{type:'image',source:{type:'base64',media_type:pendingFile.mediaType,data:pendingFile.base64}},{type:'text',text:text||'Analyse this image.'}];disp=(text||'Analyse image')+' \ud83d\udcce '+pendingFile.name}}else{uc=text}
+msgs[mode].push({role:'user',content:disp});const apiMsg={role:'user',content:uc};
+inp.value='';inp.style.height='auto';removeFile();loading=true;updateSend();renderMsgs();
+try{const am=msgs[mode].slice(0,-1).map(m=>({role:m.role==='assistant'?'assistant':'user',content:m.content}));am.push(apiMsg);
+const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:am,system:sys})});
+const rawText=await res.text();let data;try{data=JSON.parse(rawText)}catch(pe){throw new Error('Function error: '+rawText.substring(0,150))}
+if(!res.ok)throw new Error(data.error||'API error '+res.status);
+const at=data.content?data.content.filter(b=>b.type==='text').map(b=>b.text).join('\n'):'Unable to generate.';
+msgs[mode].push({role:'assistant',content:at});
+const sm=at.match(/(?:Readiness|Overall.*?)Score[:\s]*\**(\d+)\/10/i);if(sm&&mode==='founder'){const s=parseInt(sm[1]);const c=s>=7?'var(--green)':s>=5?'var(--gold)':'var(--red)';renderSigs([{l:"Readiness",v:s+"/10",c},{l:"Data Room",v:"Flagged",c:"var(--gold)"},{l:"Match",v:"Processing",c:"var(--blue)"},{l:"Risk",v:s>=7?"Low":s>=5?"Medium":"High",c}])}
+const im=at.match(/Interest.*?Score[:\s]*\**(\d+)\/10/i);if(im&&mode==='investor'){const s=parseInt(im[1]);renderSigs([{l:"Interest",v:s+"/10",c:s>=7?'var(--green)':s>=5?'var(--gold)':'var(--red)'},{l:"Match",v:"Scored",c:"var(--green)"},{l:"Intel",v:"Updated",c:"var(--green)"},{l:"Network",v:"Active",c:"var(--green)"}])}
+}catch(e){msgs[mode].push({role:'assistant',content:'Error: '+e.message})}
+finally{loading=false;updateSend();renderMsgs()}}
 
 $('chatInput').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}});
-switchMode('founder');
 </script>
 </body>
 </html>
