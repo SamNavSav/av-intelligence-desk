@@ -129,7 +129,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font
   .actions{gap:4px;margin-top:10px}.act-btn{padding:8px 14px;font-size:13px;font-weight:700;border:1px solid var(--border);border-radius:10px}.act-btn svg{width:16px;height:16px}
   .compose-send{width:36px;height:36px;font-size:18px;border-radius:10px}
   .topbar{height:50px;padding:0 12px}.topbar-name{font-size:13px}.topbar-user{display:none}
-  .dd{min-width:260px}.head-btn{padding:4px 8px;font-size:10px}
+  .dd{position:fixed !important;left:12px !important;right:12px !important;bottom:110px !important;width:auto !important;min-width:auto !important;max-height:50vh;z-index:200 !important}
+  .actions div[style*="position:relative"]{position:static !important}
+  .head-btn{padding:4px 8px;font-size:10px}
 }
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
 </style>
@@ -322,8 +324,18 @@ function buildExDD(){$('examplesDD').innerHTML='<div class="dd-label">Try an exa
 function pickSkill(id){const s=SKILLS[mode].find(x=>x.id===id);if(!s)return;skill=s;$('skillChipText').textContent=s.name;$('skillChip').classList.add('show');$('chatInput').placeholder=s.ph;$('chatSub').textContent=s.name;$('sbSkill').innerHTML='<strong>'+s.name+'</strong><br><span style="font-size:11px;color:var(--muted)">'+s.desc+'</span>';closeDD();$('chatInput').focus()}
 function clearSkill(){skill=null;$('skillChip').classList.remove('show');$('chatSub').textContent='General mode';$('sbSkill').textContent='None selected';$('chatInput').placeholder=mode==='founder'?'Describe your startup or ask anything...':'Ask about deals, portfolios, sectors...'}
 function useEx(el){$('chatInput').value=el.dataset.ex;autoGrow($('chatInput'));updateSend();closeDD();$('chatInput').focus()}
-function toggleDD(w){const d=$(w+'DD');const show=!d.classList.contains('show');closeDD();if(show){w==='skills'?buildSkillsDD():buildExDD();d.classList.add('show');$('overlay').classList.add('show')}}
-function closeDD(){$('skillsDD').classList.remove('show');$('examplesDD').classList.remove('show');$('overlay').classList.remove('show')}
+function toggleDD(w){const d=$(w+'DD');const show=!d.classList.contains('show');closeDD();if(show){w==='skills'?buildSkillsDD():buildExDD();d.classList.add('show');$('overlay').classList.add('show');
+if(window.innerWidth<=820){document.body.appendChild(d);d.style.position='fixed';d.style.left='12px';d.style.right='12px';d.style.bottom='110px';d.style.top='auto';d.style.width='auto';d.style.minWidth='auto';d.style.maxHeight='50vh';d.style.zIndex='250'}}}
+function closeDD(){
+var sd=$('skillsDD'),ed=$('examplesDD');
+sd.classList.remove('show');ed.classList.remove('show');
+// Move dropdowns back to their parents on close
+var sp=document.querySelector('.actions div:nth-child(3)');
+var ep=document.querySelector('.actions div:nth-child(4)');
+if(sd.parentNode===document.body&&sp)sp.appendChild(sd);
+if(ed.parentNode===document.body&&ep)ep.appendChild(ed);
+sd.style='';ed.style='';
+$('overlay').classList.remove('show')}
 
 function handleFile(ev){const f=ev.target.files[0];if(!f)return;if(f.size>10*1024*1024){alert('Max 10MB');return}const r=new FileReader();r.onload=function(e){const b64=e.target.result.split(',')[1];let mt=f.type;if(f.name.endsWith('.pdf'))mt='application/pdf';if(f.name.match(/\.(csv|txt|md|json)$/i)){const tr=new FileReader();tr.onload=function(te){pendingFile={name:f.name,type:'text',content:te.target.result};showFile(f.name)};tr.readAsText(f);return}pendingFile={name:f.name,type:'binary',base64:b64,mediaType:mt};showFile(f.name)};r.readAsDataURL(f);ev.target.value=''}
 function showFile(n){$('fileChipText').textContent='\ud83d\udcce '+n;$('fileChip').classList.add('show');updateSend()}
