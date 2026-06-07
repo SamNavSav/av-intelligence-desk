@@ -120,9 +120,10 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:820px){
   .layout{grid-template-columns:1fr !important;gap:0;padding:6px}.sidebar{display:none !important}
-  body{overflow:auto}.layout{height:auto}
-  .chat-area{border-radius:14px}.chat-body{flex:none;padding:12px 12px 6px}
-  .empty{justify-content:flex-start;padding:24px 16px 16px}
+  body{overflow:hidden}.layout{height:calc(100vh - 50px)}
+  .chat-area{height:100%;border-radius:14px;display:flex;flex-direction:column}
+  .chat-body{flex:1;overflow-y:auto;min-height:0;padding:12px 12px 6px;-webkit-overflow-scrolling:touch}
+  .empty{justify-content:flex-start;padding:24px 16px 16px;flex:0 0 auto}
   .empty-mark{width:40px;height:40px;font-size:15px;margin-bottom:10px}.empty h2{font-size:20px;margin-bottom:4px}.empty p{font-size:12.5px}
   .chat-head{padding:10px 12px;gap:8px}.msg-bub{max-width:88%;font-size:13px}
   .compose textarea{font-size:16px}.compose{padding:10px 12px}.input-wrap{padding:10px 12px}
