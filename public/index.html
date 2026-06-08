@@ -204,7 +204,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font
           <button class="compose-send" id="sendBtn" onclick="sendMessage()">↑</button>
         </div>
         <div class="actions">
-          <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.gif,.webp,.csv,.txt,.md,.json" style="display:none" onchange="handleFile(event)">
+          <input type="file" id="fileInput" accept="*/*" style="display:none" onchange="handleFile(event)">
           <button class="act-btn" onclick="document.getElementById('fileInput').click()"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>File</button>
           <button class="act-btn" id="micBtn" onclick="toggleVoice()"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg>Voice</button>
           <div style="position:relative"><button class="act-btn" onclick="toggleDD('skills')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Skills</button><div class="dd" id="skillsDD"></div></div>
@@ -343,7 +343,10 @@ if(ed.parentNode===document.body&&ep)ep.appendChild(ed);
 sd.style='';ed.style='';
 $('overlay').classList.remove('show')}
 
-function handleFile(ev){const f=ev.target.files[0];if(!f)return;if(f.size>10*1024*1024){alert('Max 10MB');return}const r=new FileReader();r.onload=function(e){const b64=e.target.result.split(',')[1];let mt=f.type;if(f.name.endsWith('.pdf'))mt='application/pdf';if(f.name.match(/\.(csv|txt|md|json)$/i)){const tr=new FileReader();tr.onload=function(te){pendingFile={name:f.name,type:'text',content:te.target.result};showFile(f.name)};tr.readAsText(f);return}pendingFile={name:f.name,type:'binary',base64:b64,mediaType:mt};showFile(f.name)};r.readAsDataURL(f);ev.target.value=''}
+function handleFile(ev){const f=ev.target.files[0];if(!f)return;
+var allowed=/\.(pdf|png|jpg|jpeg|gif|webp|csv|txt|md|json|doc|docx|xls|xlsx)$/i;
+if(!allowed.test(f.name)){alert('Supported: PDF, images, CSV, TXT, MD, JSON, Word, Excel');ev.target.value='';return}
+if(f.size>10*1024*1024){alert('Max 10MB');ev.target.value='';return}const r=new FileReader();r.onload=function(e){const b64=e.target.result.split(',')[1];let mt=f.type;if(f.name.endsWith('.pdf'))mt='application/pdf';if(f.name.match(/\.(csv|txt|md|json)$/i)){const tr=new FileReader();tr.onload=function(te){pendingFile={name:f.name,type:'text',content:te.target.result};showFile(f.name)};tr.readAsText(f);return}pendingFile={name:f.name,type:'binary',base64:b64,mediaType:mt};showFile(f.name)};r.readAsDataURL(f);ev.target.value=''}
 function showFile(n){$('fileChipText').textContent='\ud83d\udcce '+n;$('fileChip').classList.add('show');updateSend()}
 function removeFile(){pendingFile=null;$('fileChip').classList.remove('show');updateSend()}
 function toggleVoice(){if(isRec){stopV();return}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('Voice not supported. Try Chrome/Safari.');return}recognition=new SR();recognition.lang='en-US';recognition.interimResults=true;recognition.continuous=true;recognition.onresult=function(ev){let t='';for(let i=0;i<ev.results.length;i++)t+=ev.results[i][0].transcript;$('chatInput').value=t;autoGrow($('chatInput'));updateSend()};recognition.onerror=function(){stopV()};recognition.onend=function(){stopV()};recognition.start();isRec=true;$('micBtn').classList.add('recording')}
